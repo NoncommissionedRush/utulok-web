@@ -1,7 +1,8 @@
-import { Controller, Get, Param, Post, Query } from "@nestjs/common";
+import { Controller, Get, Param, Post, Query, UseGuards } from "@nestjs/common";
 import { CreateDogDto } from "../dtos/create-dog.dto";
 import { DogsService } from "./dogs.service";
 import { DogsFilter } from "src/dtos/dogs-filter.dto";
+import { AuthGuard } from "src/guards/auth.guard";
 
 @Controller("dogs")
 export class DogsController {
@@ -10,6 +11,7 @@ export class DogsController {
   ) {}
 
   @Post("/create")
+  @UseGuards(AuthGuard)
   async createDog(dto: CreateDogDto) {
     return this.dogsService.create(dto);
   }
