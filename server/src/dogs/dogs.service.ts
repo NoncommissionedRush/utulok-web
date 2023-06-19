@@ -1,9 +1,11 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DogEntity } from "src/entities/dog.entity";
 import { Repository } from "typeorm";
 import { CreateDogDto } from "../dtos/create-dog.dto";
 import { DogsFilter } from "src/dtos/dogs-filter.dto";
+import { UpdateDogDto } from "src/dtos/update-dog.dto";
+import { domainToASCII } from "url";
 
 @Injectable()
 export class DogsService {
@@ -35,7 +37,7 @@ export class DogsService {
     if (dto.sex !== undefined && dto.sex !== null) {
       qb.andWhere("dog.sex = :sex", { sex: dto.sex });
     }
-    
+
     if (dto.size) {
       qb.andWhere("dog.size = :size", { size: dto.size });
     }
@@ -62,9 +64,22 @@ export class DogsService {
   }
 
   /**
-   * returns single dog entity based on given id
+   * returns single dog entity based on given id. Throws NotFoundException if dog is not found
    */
   async getById(id: number) {
-    return this.dogRepository.findOne({ where: { id } });
+    const dog = await this.dogRepository.findOne({ where: { id } });
+
+    if (!dog) throw new NotFoundException(`Dog ${id} not found`);
+
+    return dog;
+  }
+
+  /**
+   * updates dog entity according to given data. Throws NotFoundException if dog is not found
+   */
+  async update(id: number, dto: UpdateDogDto) {
+    const dog = await this.getById(id);
+
+    return this.dogRepository.save({ ...dog, ...dto });
   }
 }

@@ -6,6 +6,8 @@ import { MockProvider } from "src/@types";
 import { Repository } from "typeorm";
 import { CreateDogDto } from "src/dtos/create-dog.dto";
 import { DogsFilter } from "src/dtos/dogs-filter.dto";
+import { NotFoundException } from "@nestjs/common";
+import { UpdateDogDto } from "src/dtos/update-dog.dto";
 
 describe("DogsService", () => {
   let service: DogsService;
@@ -192,9 +194,43 @@ describe("DogsService", () => {
     const id = 1;
 
     it("calls findOne on dog repository", async () => {
+      dogRepository.findOne.mockResolvedValueOnce({} as DogEntity);
+
       await service.getById(id);
 
       expect(dogRepository.findOne).toHaveBeenCalledWith({ where: { id } });
+    });
+
+    it("throws NotFoundException if dog is not found", async () => {
+      dogRepository.findOne.mockResolvedValueOnce(undefined);
+
+      await expect(service.getById(id)).rejects.toThrow(NotFoundException);
+    });
+  });
+
+  describe("update", () => {
+    const id = 1;
+    const dto: UpdateDogDto = {
+      name: "updated name",
+    };
+    const dog = {
+      name: "old name",
+    } as DogEntity;
+    let spy: any;
+
+    beforeEach(async () => {
+      spy = jest.spyOn(service, "getById").mockResolvedValueOnce(dog);
+      await service.update(id, dto);
+    });
+
+    it("calls own method getById", async () => {
+      expect(spy).toHaveBeenCalledWith(id);
+    });
+
+    it("calls save with updated entity", async () => {
+      const updatedDog = dogRepository.save.mock.calls[0][0];
+      expect(dogRepository.save).toHaveBeenCalled();
+      expect(updatedDog.name).toBe(dto.name);
     });
   });
 });
