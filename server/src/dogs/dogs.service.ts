@@ -32,10 +32,10 @@ export class DogsService {
       qb.andWhere("dog.age = :age", { age: dto.age });
     }
 
-    if (dto.sex) {
+    if (dto.sex !== undefined && dto.sex !== null) {
       qb.andWhere("dog.sex = :sex", { sex: dto.sex });
     }
-
+    
     if (dto.size) {
       qb.andWhere("dog.size = :size", { size: dto.size });
     }
