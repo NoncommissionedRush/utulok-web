@@ -5,7 +5,6 @@ import { Repository } from "typeorm";
 import { CreateDogDto } from "../dtos/create-dog.dto";
 import { DogsFilter } from "src/dtos/dogs-filter.dto";
 import { UpdateDogDto } from "src/dtos/update-dog.dto";
-import { domainToASCII } from "url";
 
 @Injectable()
 export class DogsService {
