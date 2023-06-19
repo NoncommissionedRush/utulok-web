@@ -4,6 +4,7 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
+  IsUrl,
 } from "class-validator";
 import { Age, Sex, Size } from "src/entities/dog.entity";
 
@@ -11,6 +12,10 @@ export class CreateDogDto {
   @IsString()
   @IsNotEmpty()
   name: string;
+
+  @IsUrl()
+  @IsNotEmpty()
+  image: string;
 
   @IsEnum(Size)
   @IsNotEmpty()

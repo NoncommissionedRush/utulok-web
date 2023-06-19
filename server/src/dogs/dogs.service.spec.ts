@@ -42,6 +42,7 @@ describe("DogsService", () => {
   describe("create", () => {
     const dto: CreateDogDto = {
       name: "dog name",
+      image: 'image.url',
       size: Size.MEDIUM,
       sex: Sex.MALE,
       age: Age.PUPPY,

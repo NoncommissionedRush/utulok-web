@@ -1,9 +1,9 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 export enum Size {
-  SMALL = 'small',
-  MEDIUM = 'medium',
-  BIG = 'big',
+  SMALL = "small",
+  MEDIUM = "medium",
+  BIG = "big",
 }
 
 export enum Sex {
@@ -12,16 +12,19 @@ export enum Sex {
 }
 
 export enum Age {
-  PUPPY = 'puppy',
-  TEENAGER = 'teen',
-  ADULT = 'adult',
-  ELDER = 'elder'
+  PUPPY = "puppy",
+  TEENAGER = "teen",
+  ADULT = "adult",
+  ELDER = "elder",
 }
 
 @Entity()
 export class DogEntity {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column()
+  image: string;
 
   @Column()
   name: string;
