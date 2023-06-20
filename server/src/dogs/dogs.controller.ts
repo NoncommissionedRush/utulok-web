@@ -12,6 +12,8 @@ import { DogsService } from "./dogs.service";
 import { DogsFilter } from "src/dtos/dogs-filter.dto";
 import { AuthGuard } from "src/guards/auth.guard";
 import { UpdateDogDto } from "src/dtos/update-dog.dto";
+import { AdoptDogDto } from "src/dtos/adopt-dog.dto";
+import { Status } from "src/entities/dog.entity";
 
 @Controller("dogs")
 export class DogsController {
@@ -23,6 +25,12 @@ export class DogsController {
   @UseGuards(AuthGuard)
   async createDog(dto: CreateDogDto) {
     return this.dogsService.create(dto);
+  }
+
+  @Post("/adopt")
+  async adopt(@Query() query: AdoptDogDto) {
+    //TODO: send email
+    return this.dogsService.update(query.dogId, { status: Status.RESERVED });
   }
 
   @Get("/")
