@@ -87,13 +87,13 @@ export class DogsService {
    */
   async getById(id: number, session?: Record<string, any>) {
     const options: FindOneOptions<DogEntity> = {
-      where: { id }
+      where: { id },
+    };
+
+    if (!session?.userId) {
+      (options.where as FindOptionsWhere<DogEntity>).status = Status.AVAILABLE;
     }
 
-    if(!session.userId){
-      (options.where as FindOptionsWhere<DogEntity>).status = Status.AVAILABLE
-    }
-    
     const dog = await this.dogRepository.findOne(options);
 
     if (!dog) throw new NotFoundException(`Dog ${id} not found`);
