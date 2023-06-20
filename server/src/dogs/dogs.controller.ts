@@ -5,6 +5,7 @@ import {
   Post,
   Put,
   Query,
+  Session,
   UseGuards,
 } from "@nestjs/common";
 import { CreateDogDto } from "../dtos/create-dog.dto";
@@ -46,8 +47,8 @@ export class DogsController {
   }
 
   @Get("/:id")
-  async getDog(@Param("id") id: number) {
-    return this.dogsService.getById(id);
+  async getDog(@Param("id") id: number, @Session() session: Record<string, any>) {
+    return this.dogsService.getById(id, session);
   }
 
   @Put("/:id")

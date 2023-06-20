@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DogEntity, Status } from "src/entities/dog.entity";
-import { Repository } from "typeorm";
+import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { CreateDogDto } from "../dtos/create-dog.dto";
 import { DogsFilter } from "src/dtos/dogs-filter.dto";
 import { UpdateDogDto } from "src/dtos/update-dog.dto";
@@ -85,9 +85,16 @@ export class DogsService {
   /**
    * Returns single dog entity based on given id. Throws NotFoundException if dog is not found
    */
-  async getById(id: number) {
-    //TODO: only return available dogs if user is not logged in
-    const dog = await this.dogRepository.findOne({ where: { id } });
+  async getById(id: number, session?: Record<string, any>) {
+    const options: FindOneOptions<DogEntity> = {
+      where: { id }
+    }
+
+    if(!session.userId){
+      (options.where as FindOptionsWhere<DogEntity>).status = Status.AVAILABLE
+    }
+    
+    const dog = await this.dogRepository.findOne(options);
 
     if (!dog) throw new NotFoundException(`Dog ${id} not found`);
 
