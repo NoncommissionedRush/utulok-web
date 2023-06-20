@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DogEntity } from "src/entities/dog.entity";
+import { DogEntity, Status } from "src/entities/dog.entity";
 import { Repository } from "typeorm";
 import { CreateDogDto } from "../dtos/create-dog.dto";
 import { DogsFilter } from "src/dtos/dogs-filter.dto";
@@ -24,10 +24,12 @@ export class DogsService {
   }
 
   /**
-   * Returns all dog entities that match the given filter
+   * Returns all dog entities with status = Status.AVAILABLE that match the given filter
    */
   async get(dto: DogsFilter) {
     const qb = this.dogRepository.createQueryBuilder("dog");
+
+    qb.where('dog.status = :status', { status: Status.AVAILABLE })
 
     if (dto.age) {
       qb.andWhere("dog.age = :age", { age: dto.age });

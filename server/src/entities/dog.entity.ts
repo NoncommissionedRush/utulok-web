@@ -18,6 +18,12 @@ export enum Age {
   ELDER = "elder",
 }
 
+export enum Status {
+  AVAILABLE = 'available',
+  RESERVED = 'reserver',
+  ADOPTED = 'adopted'
+}
+
 @Entity()
 export class DogEntity {
   @PrimaryGeneratedColumn()
@@ -46,6 +52,13 @@ export class DogEntity {
     enum: Age,
   })
   age: Age;
+
+  @Column({
+    type: 'enum',
+    enum: Status,
+    default: Status.AVAILABLE
+  })
+  status: Status;
 
   @Column({ nullable: true })
   breed: string;

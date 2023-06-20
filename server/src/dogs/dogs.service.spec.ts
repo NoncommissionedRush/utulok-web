@@ -1,7 +1,7 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { DogsService } from "./dogs.service";
 import { getRepositoryToken } from "@nestjs/typeorm";
-import { Age, DogEntity, Sex, Size } from "src/entities/dog.entity";
+import { Age, DogEntity, Sex, Size, Status } from "src/entities/dog.entity";
 import { MockProvider } from "src/@types";
 import { Repository } from "typeorm";
 import { CreateDogDto } from "src/dtos/create-dog.dto";
@@ -68,6 +68,7 @@ describe("DogsService", () => {
 
   describe("get", () => {
     const qb = {
+      where: jest.fn().mockReturnThis(),
       andWhere: jest.fn().mockReturnThis(),
       getMany: jest.fn(),
     };
@@ -81,6 +82,12 @@ describe("DogsService", () => {
       await service.get(dto);
       expect(dogRepository.createQueryBuilder).toHaveBeenCalledWith("dog");
     });
+
+    it('calls where with status = available', async () => {
+      const dto: DogsFilter = {}
+      await service.get(dto)
+      expect(qb.where).toHaveBeenCalledWith(expect.stringContaining("dog.status"), { status: Status.AVAILABLE })
+    })
 
     it("calls getMany on query builder", async () => {
       const dto: DogsFilter = {};

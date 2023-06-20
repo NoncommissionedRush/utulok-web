@@ -6,7 +6,7 @@ import {
   IsString,
   IsUrl,
 } from "class-validator";
-import { Age, Sex, Size } from "src/entities/dog.entity";
+import { Age, Sex, Size, Status } from "src/entities/dog.entity";
 
 export class CreateDogDto {
   @IsString()
@@ -35,6 +35,10 @@ export class CreateDogDto {
   @IsString()
   @IsOptional()
   color?: string;
+
+  @IsEnum(Status)
+  @IsOptional()
+  status?: Status = Status.AVAILABLE;
 
   @IsBoolean()
   @IsOptional()
