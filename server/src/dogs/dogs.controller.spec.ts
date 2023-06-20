@@ -64,11 +64,12 @@ describe("DogsController", () => {
 
   describe("getDog", () => {
     const id = 1;
+    const session = {}
 
     it("calls getById on dogsService", async () => {
-      await controller.getDog(id);
+      await controller.getDog(id, session);
 
-      expect(dogsService.getById).toHaveBeenCalledWith(id);
+      expect(dogsService.getById).toHaveBeenCalledWith(id, session);
     });
   });
 

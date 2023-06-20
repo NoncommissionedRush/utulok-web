@@ -213,7 +213,7 @@ describe("DogsService", () => {
     beforeEach(() => {
       dogRepository.createQueryBuilder.mockReturnValue(qb);
     });
-    
+
     it("creates new query builder", async () => {
       dto = {
         status: StatusFilter.RESERVED,
@@ -253,26 +253,42 @@ describe("DogsService", () => {
       });
     });
 
-    describe('dto does not contain status', () => {
-      it('does not add status to query', async () => {
-        dto = {}
+    describe("dto does not contain status", () => {
+      it("does not add status to query", async () => {
+        dto = {};
 
-        await service.get(dto) 
+        await service.get(dto);
 
-        expect(qb.andWhere).not.toHaveBeenCalled()
-      })
-    })
+        expect(qb.andWhere).not.toHaveBeenCalled();
+      });
+    });
   });
 
   describe("getById", () => {
     const id = 1;
 
-    it("calls findOne on dog repository", async () => {
-      dogRepository.findOne.mockResolvedValueOnce({} as DogEntity);
+    describe("if user is not logged in", () => {
+      it("calls findOne with id and status = AVAILABLE", async () => {
+        dogRepository.findOne.mockResolvedValue({} as DogEntity);
 
-      await service.getById(id);
+        await service.getById(id);
 
-      expect(dogRepository.findOne).toHaveBeenCalledWith({ where: { id } });
+        expect(dogRepository.findOne).toHaveBeenCalledWith({
+          where: { id, status: Status.AVAILABLE },
+        });
+      });
+    });
+
+    describe("if user is logged in", () => {
+      it("calls findOne on dog repository with id", async () => {
+        const session: Record<string, any> = { userId: 'user_id'}
+        
+        dogRepository.findOne.mockResolvedValueOnce({} as DogEntity);
+
+        await service.getById(id, session);
+
+        expect(dogRepository.findOne).toHaveBeenCalledWith({ where: { id } });
+      });
     });
 
     it("throws NotFoundException if dog is not found", async () => {
