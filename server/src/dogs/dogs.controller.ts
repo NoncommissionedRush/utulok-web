@@ -14,6 +14,7 @@ import { AuthGuard } from "src/guards/auth.guard";
 import { UpdateDogDto } from "src/dtos/update-dog.dto";
 import { AdoptDogDto } from "src/dtos/adopt-dog.dto";
 import { Status } from "src/entities/dog.entity";
+import { AdminDogsFilter } from "src/dtos/adming-dogs-filter.dto";
 
 @Controller("dogs")
 export class DogsController {
@@ -34,7 +35,13 @@ export class DogsController {
   }
 
   @Get("/")
-  async getDogs(@Query() query: DogsFilter) {
+  async getAvailableDogs(@Query() query: DogsFilter) {
+    return this.dogsService.getAvailable(query);
+  }
+
+  @Get("/admin")
+  @UseGuards(AuthGuard)
+  async getDogsAdmin(@Query() query: AdminDogsFilter) {
     return this.dogsService.get(query);
   }
 

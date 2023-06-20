@@ -5,6 +5,7 @@ import { Repository } from "typeorm";
 import { CreateDogDto } from "../dtos/create-dog.dto";
 import { DogsFilter } from "src/dtos/dogs-filter.dto";
 import { UpdateDogDto } from "src/dtos/update-dog.dto";
+import { AdminDogsFilter, StatusFilter } from "src/dtos/adming-dogs-filter.dto";
 
 @Injectable()
 export class DogsService {
@@ -26,10 +27,27 @@ export class DogsService {
   /**
    * Returns all dog entities with status = Status.AVAILABLE that match the given filter
    */
-  async get(dto: DogsFilter) {
-    const qb = this.dogRepository.createQueryBuilder("dog");
+  async getAvailable(dto: DogsFilter) {
+    const qb = this.getDogsQuery(dto);
 
-    qb.where('dog.status = :status', { status: Status.AVAILABLE })
+    qb.andWhere("dog.status = :status", { status: Status.AVAILABLE });
+
+    return qb.getMany();
+  }
+
+  /**
+   * Returns all dog entities that match the given filter.
+   */
+  async get(dto: AdminDogsFilter) {
+    const qb = this.getDogsQuery(dto);
+
+    if (dto.status && dto.status !== StatusFilter.ALL) {
+      qb.andWhere("dog.status = :status", { status: dto.status });
+    }
+  }
+
+  private getDogsQuery(dto: DogsFilter) {
+    const qb = this.dogRepository.createQueryBuilder("dog");
 
     if (dto.age) {
       qb.andWhere("dog.age = :age", { age: dto.age });
@@ -61,13 +79,14 @@ export class DogsService {
       });
     }
 
-    return qb.getMany();
+    return qb;
   }
 
   /**
-   * returns single dog entity based on given id. Throws NotFoundException if dog is not found
+   * Returns single dog entity based on given id. Throws NotFoundException if dog is not found
    */
   async getById(id: number) {
+    //TODO: only return available dogs if user is not logged in
     const dog = await this.dogRepository.findOne({ where: { id } });
 
     if (!dog) throw new NotFoundException(`Dog ${id} not found`);
@@ -76,7 +95,7 @@ export class DogsService {
   }
 
   /**
-   * updates dog entity according to given data. Throws NotFoundException if dog is not found
+   * Updates dog entity according to given data. Throws NotFoundException if dog is not found
    */
   async update(id: number, dto: UpdateDogDto) {
     const dog = await this.getById(id);

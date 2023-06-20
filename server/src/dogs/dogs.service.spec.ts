@@ -8,6 +8,7 @@ import { CreateDogDto } from "src/dtos/create-dog.dto";
 import { DogsFilter } from "src/dtos/dogs-filter.dto";
 import { NotFoundException } from "@nestjs/common";
 import { UpdateDogDto } from "src/dtos/update-dog.dto";
+import { AdminDogsFilter, StatusFilter } from "src/dtos/adming-dogs-filter.dto";
 
 describe("DogsService", () => {
   let service: DogsService;
@@ -42,7 +43,7 @@ describe("DogsService", () => {
   describe("create", () => {
     const dto: CreateDogDto = {
       name: "dog name",
-      image: 'image.url',
+      image: "image.url",
       size: Size.MEDIUM,
       sex: Sex.MALE,
       age: Age.PUPPY,
@@ -66,7 +67,7 @@ describe("DogsService", () => {
     });
   });
 
-  describe("get", () => {
+  describe("getAvailable", () => {
     const qb = {
       where: jest.fn().mockReturnThis(),
       andWhere: jest.fn().mockReturnThis(),
@@ -79,20 +80,23 @@ describe("DogsService", () => {
 
     it("creates query builder", async () => {
       const dto: DogsFilter = {};
-      await service.get(dto);
+      await service.getAvailable(dto);
       expect(dogRepository.createQueryBuilder).toHaveBeenCalledWith("dog");
     });
 
-    it('calls where with status = available', async () => {
-      const dto: DogsFilter = {}
-      await service.get(dto)
-      expect(qb.where).toHaveBeenCalledWith(expect.stringContaining("dog.status"), { status: Status.AVAILABLE })
-    })
-
     it("calls getMany on query builder", async () => {
       const dto: DogsFilter = {};
-      await service.get(dto);
+      await service.getAvailable(dto);
       expect(qb.getMany).toHaveBeenCalled();
+    });
+
+    it("adds Status.AVAILABLE to query", async () => {
+      const dto: DogsFilter = {};
+      await service.getAvailable(dto);
+      expect(qb.andWhere).toHaveBeenCalledWith(
+        expect.stringContaining("dog.status"),
+        { status: Status.AVAILABLE },
+      );
     });
 
     describe("if dto contains age", () => {
@@ -101,7 +105,7 @@ describe("DogsService", () => {
           age: Age.PUPPY,
         };
 
-        await service.get(dto);
+        await service.getAvailable(dto);
       });
 
       it("adds age condition to query", () => {
@@ -118,7 +122,7 @@ describe("DogsService", () => {
           sex: Sex.MALE,
         };
 
-        await service.get(dto);
+        await service.getAvailable(dto);
       });
 
       it("adds sex condition to query", () => {
@@ -135,7 +139,7 @@ describe("DogsService", () => {
           size: Size.SMALL,
         };
 
-        await service.get(dto);
+        await service.getAvailable(dto);
       });
 
       it("adds size condition to query", () => {
@@ -152,7 +156,7 @@ describe("DogsService", () => {
           isCastrated: true,
         };
 
-        await service.get(dto);
+        await service.getAvailable(dto);
       });
 
       it("adds isCastrated condition to query", () => {
@@ -169,7 +173,7 @@ describe("DogsService", () => {
           isVaccinated: true,
         };
 
-        await service.get(dto);
+        await service.getAvailable(dto);
       });
 
       it("adds isVaccinated condition to query", () => {
@@ -186,7 +190,7 @@ describe("DogsService", () => {
           isKidFriendly: true,
         };
 
-        await service.get(dto);
+        await service.getAvailable(dto);
       });
 
       it("adds isKidFriendly condition to query", () => {
@@ -196,6 +200,68 @@ describe("DogsService", () => {
         );
       });
     });
+  });
+
+  describe("get", () => {
+    const qb = {
+      andWhere: jest.fn().mockReturnThis(),
+      getMany: jest.fn(),
+    };
+
+    let dto: AdminDogsFilter;
+
+    beforeEach(() => {
+      dogRepository.createQueryBuilder.mockReturnValue(qb);
+    });
+    
+    it("creates new query builder", async () => {
+      dto = {
+        status: StatusFilter.RESERVED,
+      };
+
+      await service.get(dto);
+
+      expect(dogRepository.createQueryBuilder).toHaveBeenCalled();
+    });
+
+    describe("if dto contains status", () => {
+      describe("if status is 'ALL'", () => {
+        it("does not add status to query", async () => {
+          dto = {
+            status: StatusFilter.ALL,
+          };
+
+          await service.get(dto);
+
+          expect(qb.andWhere).not.toHaveBeenCalled();
+        });
+      });
+
+      describe("if status is not 'ALL'", () => {
+        it("adds status to query", async () => {
+          dto = {
+            status: StatusFilter.RESERVED,
+          };
+
+          await service.get(dto);
+
+          expect(qb.andWhere).toHaveBeenCalledWith(
+            expect.stringContaining("dog.status"),
+            { status: dto.status },
+          );
+        });
+      });
+    });
+
+    describe('dto does not contain status', () => {
+      it('does not add status to query', async () => {
+        dto = {}
+
+        await service.get(dto) 
+
+        expect(qb.andWhere).not.toHaveBeenCalled()
+      })
+    })
   });
 
   describe("getById", () => {

@@ -5,6 +5,7 @@ import { MockProvider } from "src/@types";
 import { CreateDogDto } from "src/dtos/create-dog.dto";
 import { DogsFilter } from "src/dtos/dogs-filter.dto";
 import { UpdateDogDto } from "src/dtos/update-dog.dto";
+import { AdminDogsFilter } from "src/dtos/adming-dogs-filter.dto";
 
 describe("DogsController", () => {
   let controller: DogsController;
@@ -17,6 +18,7 @@ describe("DogsController", () => {
         return {
           create: jest.fn(),
           get: jest.fn(),
+          getAvailable: jest.fn(),
           getById: jest.fn(),
           update: jest.fn(),
         };
@@ -41,15 +43,24 @@ describe("DogsController", () => {
     });
   });
 
-  describe("getDogs", () => {
+  describe("getAvailableDogs", () => {
     const query = {} as DogsFilter;
 
-    it("calls get on dogsService", async () => {
-      await controller.getDogs(query);
+    it("calls getAvailable on dogsService", async () => {
+      await controller.getAvailableDogs(query);
 
-      expect(dogsService.get).toHaveBeenCalledWith(query);
+      expect(dogsService.getAvailable).toHaveBeenCalledWith(query);
     });
   });
+
+  describe("getDogsAdmin", () => {
+    const query = {} as AdminDogsFilter
+
+    it("calls get on dogsService", async () => {
+      await controller.getDogsAdmin(query)
+      expect(dogsService.get).toHaveBeenCalledWith(query)
+    })
+  })
 
   describe("getDog", () => {
     const id = 1;
