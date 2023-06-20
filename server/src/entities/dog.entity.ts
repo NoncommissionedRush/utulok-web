@@ -20,7 +20,7 @@ export enum Age {
 
 export enum Status {
   AVAILABLE = 'available',
-  RESERVED = 'reserver',
+  RESERVED = 'reserved',
   ADOPTED = 'adopted'
 }
 
