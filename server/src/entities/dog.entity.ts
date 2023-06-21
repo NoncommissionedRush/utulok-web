@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { AdoptionEntity } from "./adoption.entity";
 
 export enum Size {
   SMALL = "small",
@@ -74,4 +75,8 @@ export class DogEntity {
 
   @Column({ nullable: true })
   isCastraded: boolean;
+
+  @OneToOne(() => AdoptionEntity, adoption => adoption.dog) 
+  @JoinColumn()
+  adoption: AdoptionEntity
 }
