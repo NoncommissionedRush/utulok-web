@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DogEntity, Status } from "src/entities/dog.entity";
+import { DogEntity, DogStatus } from "src/entities/dog.entity";
 import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 import { CreateDogDto } from "../dtos/create-dog.dto";
 import { DogsFilter } from "src/dtos/dogs-filter.dto";
@@ -30,7 +30,7 @@ export class DogsService {
   async getAvailable(dto: DogsFilter) {
     const qb = this.getDogsQuery(dto);
 
-    qb.andWhere("dog.status = :status", { status: Status.AVAILABLE });
+    qb.andWhere("dog.status = :status", { status: DogStatus.AVAILABLE });
 
     return qb.getMany();
   }
@@ -79,6 +79,12 @@ export class DogsService {
       });
     }
 
+    if(dto.elibigleFor){
+      qb.andWhere("dog.elibigleFor = :elibigleFor", {
+        elibigleFor: dto.elibigleFor,
+      });
+    }
+
     return qb;
   }
 
@@ -90,8 +96,8 @@ export class DogsService {
       where: { id },
     };
 
-    if (!session?.userId) {
-      (options.where as FindOptionsWhere<DogEntity>).status = Status.AVAILABLE;
+    if (isLoggedInUser()) {
+      (options.where as FindOptionsWhere<DogEntity>).status = DogStatus.AVAILABLE;
     }
 
     const dog = await this.dogRepository.findOne(options);
@@ -99,6 +105,10 @@ export class DogsService {
     if (!dog) throw new NotFoundException(`Dog ${id} not found`);
 
     return dog;
+
+    function isLoggedInUser() {
+      return !session?.userId;
+    }
   }
 
   /**
