@@ -9,6 +9,7 @@ import { DogsModule } from "./dogs/dogs.module";
 import { AuthModule } from "./auth/auth.module";
 import { dbConfig, s3Config, sessionConfig } from "./config/configuration";
 import { S3Module } from './s3/s3.module';
+import { AdoptionModule } from './adoption/adoption.module';
 
 @Module({
   imports: [
@@ -24,7 +25,8 @@ import { S3Module } from './s3/s3.module';
     UsersModule,
     DogsModule,
     AuthModule,
-    S3Module
+    S3Module,
+    AdoptionModule
   ],
   controllers: [AppController],
   providers: [AppService],
