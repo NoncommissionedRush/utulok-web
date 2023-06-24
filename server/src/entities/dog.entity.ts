@@ -1,5 +1,7 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
-import { AdoptionEntity } from "./adoption.entity";
+import { BeforeInsert, Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { VirtualAdoption } from "./virtual-adoption.entity";
+import { StandardAdoption } from "./standard-adoption.entity";
+import { TemporaryAdoption } from "./temporary-adoption.entity";
 
 export enum Size {
   SMALL = "small",
@@ -25,15 +27,15 @@ export enum DogStatus {
   DECEASED = 'deceased'
 }
 
+export enum EligibleFor {
+  STANDARD = 'standard',
+  VIRTUAL_ONLY = 'virtual_only',
 }
 
 @Entity()
 export class DogEntity {
   @PrimaryGeneratedColumn()
   id: number;
-
-  @Column()
-  image: string;
 
   @Column()
   name: string;
@@ -58,27 +60,58 @@ export class DogEntity {
 
   @Column({
     type: 'enum',
-    enum: Status,
-    default: Status.AVAILABLE
+    enum: DogStatus,
+    default: DogStatus.AVAILABLE
   })
-  status: Status;
+  status: DogStatus;
+
+  @Column({
+    type: 'enum',
+    enum: EligibleFor,
+    default: EligibleFor.STANDARD
+  })
+  eligibleFor: EligibleFor;
 
   @Column({ nullable: true })
-  breed: string;
+  breed?: string;
 
   @Column({ nullable: true })
-  color: string;
+  color?: string;
 
   @Column({ nullable: true })
-  isKidFriendly: boolean;
+  isKidFriendly?: boolean;
 
   @Column({ nullable: true })
-  isVaccinated: boolean;
+  isVaccinated?: boolean;
 
   @Column({ nullable: true })
-  isCastraded: boolean;
+  isCastraded?: boolean;
 
-  @OneToOne(() => AdoptionEntity, adoption => adoption.dog) 
+  @OneToOne(() => StandardAdoption, adoption => adoption.dog)
   @JoinColumn()
-  adoption: AdoptionEntity
+  adoption: StandardAdoption[]
+
+  @OneToOne(() => TemporaryAdoption, adoption => adoption.dog)
+  temporaryAdoption: TemporaryAdoption
+
+  @OneToMany(() => VirtualAdoption, adoption => adoption.dog)
+  virtualAdoptions: VirtualAdoption[]
+
+  @Column({
+    type: 'bigint',
+    transformer: {
+      to(value: number): number {
+        return value;
+      },
+      from(value: string): number {
+        return parseInt(value, 10);
+      },
+    },
+  })
+  createdTs: number;
+
+  @BeforeInsert()
+  beforeInsertActions() {
+    this.createdTs = Date.now()
+  }
 }
