@@ -16,7 +16,7 @@ export enum Age {
   PUPPY = "puppy",
   TEENAGER = "teen",
   ADULT = "adult",
-  ELDER = "elder",
+  SENIOR = "senior",
 }
 
 export enum DogStatus {
