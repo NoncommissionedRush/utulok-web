@@ -1,7 +1,7 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { DogsService } from "./dogs.service";
 import { getRepositoryToken } from "@nestjs/typeorm";
-import { Age, DogEntity, Sex, Size, Status } from "src/entities/dog.entity";
+import { Age, DogEntity, Sex, Size, DogStatus } from "src/entities/dog.entity";
 import { MockProvider } from "src/@types";
 import { Repository } from "typeorm";
 import { CreateDogDto } from "src/dtos/create-dog.dto";
@@ -95,7 +95,7 @@ describe("DogsService", () => {
       await service.getAvailable(dto);
       expect(qb.andWhere).toHaveBeenCalledWith(
         expect.stringContaining("dog.status"),
-        { status: Status.AVAILABLE },
+        { status: DogStatus.AVAILABLE },
       );
     });
 
@@ -274,7 +274,7 @@ describe("DogsService", () => {
         await service.getById(id);
 
         expect(dogRepository.findOne).toHaveBeenCalledWith({
-          where: { id, status: Status.AVAILABLE },
+          where: { id, status: DogStatus.AVAILABLE },
         });
       });
     });
