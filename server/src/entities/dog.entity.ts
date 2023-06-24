@@ -19,10 +19,12 @@ export enum Age {
   ELDER = "elder",
 }
 
-export enum Status {
+export enum DogStatus {
   AVAILABLE = 'available',
-  RESERVED = 'reserved',
-  ADOPTED = 'adopted'
+  ADOPTED = 'adopted',
+  DECEASED = 'deceased'
+}
+
 }
 
 @Entity()

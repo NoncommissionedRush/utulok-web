@@ -1,11 +1,10 @@
-import { Status } from "src/entities/dog.entity";
+import { DogStatus } from "src/entities/dog.entity";
 import { DogsFilter } from "./dogs-filter.dto";
 import { IsEnum, IsOptional } from "class-validator";
 
 export enum StatusFilter {
-  AVAILABLE = Status.AVAILABLE,
-  RESERVED = Status.RESERVED,
-  ADOPTED = Status.ADOPTED,
+  AVAILABLE = DogStatus.AVAILABLE,
+  ADOPTED = DogStatus.ADOPTED,
   ALL = 'all'
 }
 
