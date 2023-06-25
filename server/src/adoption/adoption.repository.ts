@@ -52,32 +52,15 @@ export class AdoptionRepository {
         return repository.save(newAdoption);
     }
 
-    async getStandardAdoption(id: number): Promise<StandardAdoption> {
-        const adoption = await this.standardAdoptionRepository.findOne({ where: { id } });
-        if (!adoption) throw new NotFoundException('Adoption not found');
-        return adoption
-    }
-
-    async getVirtualAdoption(id: number): Promise<VirtualAdoption> {
-        const adoption = await this.virtualAdoptionRepository.findOne({ where: { id } });
-        if (!adoption) throw new NotFoundException('Adoption not found');
-        return adoption
-    }
-
-    async getTemporaryAdoption(id: number): Promise<TemporaryAdoption> {
-        const adoption = await this.temporaryAdoptionRepository.findOne({ where: { id } });
-        if (!adoption) throw new NotFoundException('Adoption not found');
-        return adoption
-    }
-
+    //TODO: id can be same between repositories, fix this
     async get(id: number): Promise<Adoption> {
-        const standardAdoption = await this.getStandardAdoption(id)
+        const standardAdoption = await this.standardAdoptionRepository.findOne({ where: { id } });
         if (standardAdoption) return standardAdoption;
 
-        const virtualAdoption = await this.getVirtualAdoption(id)
+        const virtualAdoption = await this.virtualAdoptionRepository.findOne({ where: { id } });
         if (virtualAdoption) return virtualAdoption;
 
-        const temporaryAdoption = await this.getTemporaryAdoption(id)
+        const temporaryAdoption = await this.temporaryAdoptionRepository.findOne({ where: { id } });
         if (temporaryAdoption) return temporaryAdoption;
     }
 
