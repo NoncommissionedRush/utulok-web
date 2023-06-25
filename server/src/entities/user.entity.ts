@@ -1,13 +1,15 @@
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import { Exclude } from "class-transformer";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class UserEntity {
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn()
     id: number;
 
     @Column()
     username: string;
 
     @Column()
+    @Exclude()
     password: string;
 }
