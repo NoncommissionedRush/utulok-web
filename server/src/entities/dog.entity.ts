@@ -89,7 +89,6 @@ export class DogEntity implements Dog {
   isCastrated: boolean;
 
   @OneToOne(() => StandardAdoption, adoption => adoption.dog)
-  @JoinColumn()
   adoption: StandardAdoption[]
 
   @OneToOne(() => TemporaryAdoption, adoption => adoption.dog)
