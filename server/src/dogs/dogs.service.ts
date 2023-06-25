@@ -44,6 +44,8 @@ export class DogsService {
     if (dto.status && dto.status !== StatusFilter.ALL) {
       qb.andWhere("dog.status = :status", { status: dto.status });
     }
+
+    return qb.getMany();
   }
 
   private getDogsQuery(dto: DogsFilter) {
