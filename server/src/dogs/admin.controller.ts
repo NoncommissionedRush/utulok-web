@@ -3,12 +3,10 @@ import { AdoptionService } from '../adoption/adoption.service';
 import { AdminDogsFilter } from '../dtos/adming-dogs-filter.dto';
 import { CreateDogDto } from '../dtos/create-dog.dto';
 import { UpdateDogDto } from '../dtos/update-dog.dto';
-import { AdoptionStatus } from '../entities/abstract.adoption';
-import { AuthGuard } from '../guards/auth.guard';
 import { DogsService } from './dogs.service';
 import { ProcessAdoptionDto } from '../dtos/process-adoption.dto';
 
-@UseGuards(AuthGuard)
+// @UseGuards(AuthGuard)
 @Controller('admin')
 export class AdminController {
 constructor(
@@ -23,7 +21,7 @@ constructor(
 
   //TODO: fix validation on incoming query
   @Post("process-adoption")
-  async processAdoption(dto: ProcessAdoptionDto) {
+  async processAdoption(@Body() dto: ProcessAdoptionDto) {
     //TODO: send email to adopter
     this.adoptionService.processAdoption(dto);
   }
