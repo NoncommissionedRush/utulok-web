@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Injectable, InternalServerErrorException, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { AdminDogsFilter, StatusFilter } from "src/dtos/adming-dogs-filter.dto";
 import { DogsFilter } from "src/dtos/dogs-filter.dto";
@@ -6,7 +6,7 @@ import { UpdateDogDto } from "src/dtos/update-dog.dto";
 import { DogEntity, DogStatus } from "src/entities/dog.entity";
 import { FindOneOptions, Repository } from "typeorm";
 import { CreateDogDto } from "../dtos/create-dog.dto";
-import { OnEvent } from "@nestjs/event-emitter";
+import { EventEmitter2, OnEvent } from "@nestjs/event-emitter";
 import { Events } from "../events";
 import { Adoption } from "../@types";
 
@@ -16,7 +16,8 @@ export class DogsService {
     @InjectRepository(DogEntity) private readonly dogRepository: Repository<
       DogEntity
     >,
-  ) {}
+    private eventEmitter: EventEmitter2
+  ) { }
 
   /**
    * Adds new dog to the database, returns dog entity
@@ -47,6 +48,10 @@ export class DogsService {
     if (dto.status && dto.status !== StatusFilter.ALL) {
       qb.andWhere("dog.status = :status", { status: dto.status });
     }
+
+    qb.leftJoinAndSelect("dog.adoption", "adoption");
+    qb.leftJoinAndSelect('dog.virtualAdoptions', 'virtualAdoptions')
+    qb.leftJoinAndSelect('dog.temporaryAdoption', 'temporaryAdoption')
 
     return qb.getMany();
   }
@@ -94,44 +99,71 @@ export class DogsService {
   }
 
   /**
-   * Returns single dog entity with status = 'available' based on given id. If dog is not found, throws NotFoundException
+   * Returns single dog entity with status = 'available' based on given id. 
+   * 
+   * Throws NotFoundException if dog is not found
    */
-  async getAvailableById(id: number ) {
+  async getAvailableById(id: number) {
     const options: FindOneOptions<DogEntity> = {
-      where: { id, status: DogStatus.AVAILABLE  },
+      where: { id, status: DogStatus.AVAILABLE },
     };
 
     const dog = await this.dogRepository.findOne(options);
 
-    if(!dog) throw new NotFoundException('Dog not found');
+    if (!dog) throw new NotFoundException('Dog not found');
 
     return dog;
   }
 
   /**
-   * Returns single dog entity based on given id. Only admins can get unavailable dogs.
+   * Returns single dog entity based on given id. Only admins can get unavailable dogs. If dog is not found, throws NotFoundException
    */
   async getById(id: number) {
     const options: FindOneOptions<DogEntity> = {
       where: { id },
+      relations: {
+        adoption: true,
+        virtualAdoptions: true,
+        temporaryAdoption: true
+      }
     };
 
-    return this.dogRepository.findOne(options);
+    const dog = await this.dogRepository.findOne(options);
+
+    if (!dog) throw new NotFoundException('Dog not found');
+
+    return dog;
   }
 
   /**
-   * Updates dog entity according to given data. Throws NotFoundException if dog is not found
+   * Updates given dog entity according to the given dto and returns updated dog entity
    */
-  async update(id: number, dto: UpdateDogDto) {
-    const dog = await this.getAvailableById(id);
+  async update(dog: DogEntity, dto: Partial<DogEntity>): Promise<DogEntity>
 
-    if(!dog) throw new NotFoundException('Dog not found');
+  /**
+   * Looks for dog entity with given id, updates it according to the given dto and returns updated dog entity.
+   */
+  async update(id: number, dto: UpdateDogDto): Promise<DogEntity>
 
-    return this.dogRepository.save({ ...dog, ...dto });
+  async update(idOrDog: number | DogEntity, dto: UpdateDogDto) {
+    let dogEntity: DogEntity;
+
+    if (typeof idOrDog === 'number') {
+      dogEntity = await this.getById(idOrDog);
+    } else {
+      dogEntity = idOrDog;
+    }
+
+    if (dto.status && dto.status === DogStatus.DECEASED) {
+      await this.eventEmitter.emitAsync(Events.DOG_DECEASED, dogEntity)
+    }
+
+    return this.dogRepository.save({ ...dogEntity, ...dto });
   }
 
   @OnEvent(Events.ADOPTION_STANDARD_APPROVED)
-  async onAdoptionStandardApproved(adoption: Adoption) {
-    this.dogRepository.save({...adoption.dog, status: DogStatus.ADOPTED})
+  async handleStandardAdoptionApproved(adoption: Adoption) {
+    await this.dogRepository.save({...adoption.dog, status: DogStatus.ADOPTED})
   }
+
 }
