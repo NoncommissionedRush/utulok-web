@@ -104,8 +104,6 @@ export class DogsService {
 
     const dog = await this.dogRepository.findOne(options);
 
-    if (!dog) throw new NotFoundException(`Dog ${id} not found`);
-
     return dog;
 
     function isLoggedInUser() {
