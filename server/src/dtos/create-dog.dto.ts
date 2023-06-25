@@ -7,15 +7,16 @@ import {
   IsUrl,
 } from "class-validator";
 import { Age, EligibleFor, Sex, Size, DogStatus } from "src/entities/dog.entity";
+import { Dog } from "../@types";
 
-export class CreateDogDto {
+export class CreateDogDto implements Dog {
   @IsString()
   @IsNotEmpty()
   name: string;
 
-  @IsUrl()
-  @IsNotEmpty()
-  image: string;
+  // @IsUrl()
+  // @IsNotEmpty()
+  // image: string;
 
   @IsEnum(Size)
   @IsNotEmpty()
@@ -27,27 +28,27 @@ export class CreateDogDto {
 
   @IsEnum(Age)
   @IsOptional()
-  age?: Age;
+  age: Age;
 
   @IsString()
   @IsOptional()
-  breed?: string;
+  breed: string;
 
   @IsString()
   @IsOptional()
-  color?: string;
+  color: string;
 
   @IsEnum(DogStatus)
   @IsOptional()
-  status?: DogStatus = DogStatus.AVAILABLE;
+  status: DogStatus = DogStatus.AVAILABLE;
 
   @IsEnum(EligibleFor)
   @IsOptional()
-  eligibleFor?: EligibleFor = EligibleFor.STANDARD;
+  eligibleFor: EligibleFor = EligibleFor.STANDARD;
 
   @IsBoolean()
   @IsOptional()
-  isKidFriendly?: boolean;
+  isKidFriendly: boolean;
 
   @IsBoolean()
   @IsOptional()
