@@ -4,13 +4,17 @@ import { AdoptDogDto } from '../dtos/adopt-dog.dto';
 import { AdoptionRepository } from './adoption.repository';
 import { AdoptionStatus, AdoptionType } from '../entities/abstract.adoption';
 import { DogsService } from '../dogs/dogs.service';
-import { DogStatus, EligibleFor } from '../entities/dog.entity';
+import { EligibleFor } from '../entities/dog.entity';
+import { ProcessAdoptionDto } from '../dtos/process-adoption.dto';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { Events } from '../events';
 
 @Injectable()
 export class AdoptionService {
     constructor(
         private readonly adoptionRepository: AdoptionRepository,
-        private readonly dogService: DogsService
+        private readonly dogService: DogsService,
+        private readonly eventEmitter: EventEmitter2
     ) { }
 
     async createAdoption(dto: AdoptDogDto): Promise<Adoption> {
@@ -23,39 +27,33 @@ export class AdoptionService {
         return this.adoptionRepository.createAdoption(dto, dog)
     }
 
-    async processAdoption(id: number, status: AdoptionStatus) {
-        const adoption = await this.adoptionRepository.get(id)
+    async processAdoption(dto: ProcessAdoptionDto) {
+        const adoption = await this.adoptionRepository.findOneBy({ id: dto.id, type: dto.type })
 
         if (adoption.type === AdoptionType.STANDARD) {
-            this.processStandardAdoption(adoption, status);
+            this.processStandardAdoption(adoption, dto.status);
         }
 
-        if(adoption.type === AdoptionType.TEMPORARY) {
-            this.processTemporaryAdoption(adoption, status);
+        if (adoption.type === AdoptionType.TEMPORARY) {
+            this.processTemporaryAdoption(adoption, dto.status);
         }
     }
 
-    async getPendingAdoptions(){
+    async getPendingAdoptions() {
         return this.adoptionRepository.getPendingAdoptions();
     }
 
     private processStandardAdoption(adoption: Adoption, status: AdoptionStatus) {
         if (status === AdoptionStatus.APPROVED) {
-            this.adoptionRepository.update(adoption.id, { status });
-
-            this.dogService.update(adoption.dog.id, { status: DogStatus.ADOPTED });
-
-            this.adoptionRepository.deleteTemporaryAdoptions(adoption.dog.id)
-
-            this.adoptionRepository.deleteVirtualAdoptions(adoption.dog.id)
+            this.eventEmitter.emit(Events.ADOPTION_STANDARD_APPROVED, adoption)
         }
 
         if (status === AdoptionStatus.REJECTED) {
-            this.adoptionRepository.delete(adoption.id);
+            this.adoptionRepository.remove(adoption)
         }
     }
 
     private processTemporaryAdoption(adoption: Adoption, status: AdoptionStatus) {
-        this.adoptionRepository.update(adoption.id, { status });
+        this.adoptionRepository.setAdoptionStatus(adoption, status)
     }
 }
