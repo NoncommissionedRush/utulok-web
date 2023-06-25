@@ -1,11 +1,14 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DogEntity, DogStatus } from "src/entities/dog.entity";
-import { FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
-import { CreateDogDto } from "../dtos/create-dog.dto";
+import { AdminDogsFilter, StatusFilter } from "src/dtos/adming-dogs-filter.dto";
 import { DogsFilter } from "src/dtos/dogs-filter.dto";
 import { UpdateDogDto } from "src/dtos/update-dog.dto";
-import { AdminDogsFilter, StatusFilter } from "src/dtos/adming-dogs-filter.dto";
+import { DogEntity, DogStatus } from "src/entities/dog.entity";
+import { FindOneOptions, Repository } from "typeorm";
+import { CreateDogDto } from "../dtos/create-dog.dto";
+import { OnEvent } from "@nestjs/event-emitter";
+import { Events } from "../events";
+import { Adoption } from "../@types";
 
 @Injectable()
 export class DogsService {
@@ -36,7 +39,7 @@ export class DogsService {
   }
 
   /**
-   * Returns all dog entities that match the given filter.
+   * Returns all dog entities that match the given filter. Only admins can get dogs with different status than 'available'
    */
   async getMany(dto: AdminDogsFilter) {
     const qb = this.getDogsQuery(dto);
@@ -91,16 +94,23 @@ export class DogsService {
   }
 
   /**
-   * Returns single dog entity based on given id.
+   * Returns single dog entity with status = 'available' based on given id. If dog is not found, throws NotFoundException
    */
   async getAvailableById(id: number ) {
     const options: FindOneOptions<DogEntity> = {
       where: { id, status: DogStatus.AVAILABLE  },
     };
 
-    return this.dogRepository.findOne(options);
+    const dog = await this.dogRepository.findOne(options);
+
+    if(!dog) throw new NotFoundException('Dog not found');
+
+    return dog;
   }
 
+  /**
+   * Returns single dog entity based on given id. Only admins can get unavailable dogs.
+   */
   async getById(id: number) {
     const options: FindOneOptions<DogEntity> = {
       where: { id },
@@ -118,5 +128,10 @@ export class DogsService {
     if(!dog) throw new NotFoundException('Dog not found');
 
     return this.dogRepository.save({ ...dog, ...dto });
+  }
+
+  @OnEvent(Events.ADOPTION_STANDARD_APPROVED)
+  async onAdoptionStandardApproved(adoption: Adoption) {
+    this.dogRepository.save({...adoption.dog, status: DogStatus.ADOPTED})
   }
 }
