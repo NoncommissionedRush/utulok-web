@@ -98,7 +98,7 @@ export class DogsService {
       where: { id },
     };
 
-    if (isLoggedInUser()) {
+    if (!isLoggedInUser()) {
       (options.where as FindOptionsWhere<DogEntity>).status = DogStatus.AVAILABLE;
     }
 
@@ -109,7 +109,7 @@ export class DogsService {
     return dog;
 
     function isLoggedInUser() {
-      return !session?.userId;
+      return !!session?.userId;
     }
   }
 
