@@ -28,5 +28,5 @@ export class DogsFilter {
 
   @IsEnum(EligibleFor)
   @IsOptional()
-  elibigleFor?: EligibleFor
+  eligibleFor?: EligibleFor
 }

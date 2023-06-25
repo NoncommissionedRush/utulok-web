@@ -81,9 +81,9 @@ export class DogsService {
       });
     }
 
-    if(dto.elibigleFor){
-      qb.andWhere("dog.elibigleFor = :elibigleFor", {
-        elibigleFor: dto.elibigleFor,
+    if (dto.eligibleFor) {
+      qb.andWhere("dog.eligibleFor = :eligibleFor", {
+        eligibleFor: dto.eligibleFor,
       });
     }
 
