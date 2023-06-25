@@ -6,6 +6,7 @@ import { UpdateDogDto } from '../dtos/update-dog.dto';
 import { AdoptionStatus } from '../entities/abstract.adoption';
 import { AuthGuard } from '../guards/auth.guard';
 import { DogsService } from './dogs.service';
+import { ProcessAdoptionDto } from '../dtos/process-adoption.dto';
 
 @UseGuards(AuthGuard)
 @Controller('admin')
@@ -22,9 +23,9 @@ constructor(
 
   //TODO: fix validation on incoming query
   @Post("process-adoption")
-  async processAdoption(@Query("id") id: number, @Query("status") status: AdoptionStatus) {
+  async processAdoption(dto: ProcessAdoptionDto) {
     //TODO: send email to adopter
-    this.adoptionService.processAdoption(id, status);
+    this.adoptionService.processAdoption(dto);
   }
 
   @Get("/pending-adoptions")
