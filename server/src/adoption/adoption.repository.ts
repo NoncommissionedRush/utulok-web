@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { StandardAdoption } from '../entities/standard-adoption.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindOperator, FindOptionsWhere, Repository } from 'typeorm';
@@ -6,10 +6,8 @@ import { VirtualAdoption } from '../entities/virtual-adoption.entity';
 import { TemporaryAdoption } from '../entities/temporary-adoption.entity';
 import { AdoptDogDto } from '../dtos/adopt-dog.dto';
 import { Adoption } from '../@types';
-import { AdoptionStatus, AdoptionType } from '../entities/abstract.adoption';
+import { AdoptionApprovalStatus, AdoptionType } from '../entities/abstract.adoption';
 import { DogEntity } from '../entities/dog.entity';
-import { OnEvent } from '@nestjs/event-emitter';
-import { Events } from '../events';
 
 @Injectable()
 export class AdoptionRepository {
@@ -32,7 +30,7 @@ export class AdoptionRepository {
         })
 
         if (dto.type === AdoptionType.VIRTUAL) {
-            newAdoption.status = AdoptionStatus.APPROVED;
+            newAdoption.approvalStatus = AdoptionApprovalStatus.APPROVED;
         }
 
         newAdoption.dog = dog;
@@ -43,7 +41,7 @@ export class AdoptionRepository {
     async findOneBy(options: FindOptionsWhere<Adoption>): Promise<Adoption> {
         const repository = this.getRepository(options.type);
 
-        return repository.findOne({ where: options})
+        return repository.findOne({ where: options, relations: { dog: true } })
     }
 
     private getRepository(type: AdoptionType | FindOperator<AdoptionType>) {
@@ -66,16 +64,26 @@ export class AdoptionRepository {
     }
 
     async getPendingAdoptions(): Promise<Adoption[]> {
-        const standardAdoptions = await this.standardAdoptionRepository.find({ where: { status: AdoptionStatus.PENDING } });
-        const temporaryAdoptions = await this.temporaryAdoptionRepository.find({ where: { status: AdoptionStatus.PENDING } });
+        const standardAdoptions = await this.standardAdoptionRepository.find({
+            where: { approvalStatus: AdoptionApprovalStatus.PENDING },
+            relations: {
+                dog: true
+            }
+        });
+        const temporaryAdoptions = await this.temporaryAdoptionRepository.find({
+            where: { approvalStatus: AdoptionApprovalStatus.PENDING },
+            relations: {
+                dog: true
+            }
+        });
 
         return [...standardAdoptions, ...temporaryAdoptions]
     }
 
-    async setAdoptionStatus(adoption: Adoption, status: AdoptionStatus) {
+    async setAdoptionStatus(adoption: Adoption, status: AdoptionApprovalStatus) {
         const repository = this.getRepository(adoption.type);
 
-        return repository.save({ ...adoption, status })
+        return repository.save({ ...adoption, approvalStatus: status })
     }
 
     async remove(adoption: Adoption) {
@@ -84,20 +92,18 @@ export class AdoptionRepository {
         return repository.remove(adoption);
     }
 
-    @OnEvent(Events.ADOPTION_STANDARD_APPROVED)
-    async onStandardAdoptionApproved(adoption: StandardAdoption) {
-        this.setAdoptionStatus(adoption, AdoptionStatus.APPROVED);
+    async deleteVirtualAdoptions(dogId: number) {
+        return this.virtualAdoptionRepository.createQueryBuilder('adoption')
+            .where('dogId = :id', { id: dogId })
+            .delete()
+            .execute()
 
-        this.deleteTemporaryAdoptions(adoption.dog.id);
-
-        this.deleteVirtualAdoptions(adoption.dog.id);
     }
 
-    private async deleteTemporaryAdoptions(dogId: number) {
-        this.temporaryAdoptionRepository.delete({ dog: { id: dogId } });
-    }
-
-    private async deleteVirtualAdoptions(dogId: number) {
-        this.virtualAdoptionRepository.delete({ dog: { id: dogId } });
+    async deleteTemporaryAdoption(dogId: number) {
+        return this.temporaryAdoptionRepository.createQueryBuilder('adoption')
+            .where('dogId = :id', { id: dogId })
+            .delete()
+            .execute()
     }
 }
