@@ -22,9 +22,9 @@ export class DogsController {
   ) {}
 
   @Post("/adopt")
-  async adopt(@Body() query: AdoptDogDto) {
+  async adopt(@Body() dto: AdoptDogDto) {
     //TODO: send email to admin
-    return this.adoptionService.createAdoption(query);
+    return this.adoptionService.createAdoption(dto);
   }
 
   @Get("/")
