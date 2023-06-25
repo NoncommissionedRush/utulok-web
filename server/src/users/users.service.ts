@@ -25,17 +25,6 @@ export class UsersService {
   }
 
   /**
-  * Returns single user entity based on given search options. Throws NotFoundException if user is not NotFoundException
-  */
-  async findOneOrThrow(options: FindOneOptions<UserEntity>) {
-    const user = await this.userRepository.findOne(options)
-    
-    if(!user) throw new NotFoundException('User not found')
-    
-    return user;
-  }
-
-  /**
    * Returns single user entity based on given search options
    */
   async findOne(options: FindOneOptions<UserEntity>) {
