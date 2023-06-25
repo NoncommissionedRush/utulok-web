@@ -1,6 +1,6 @@
 import { BeforeInsert, Column, PrimaryGeneratedColumn } from "typeorm";
 
-export enum AdoptionStatus {
+export enum AdoptionApprovalStatus {
     PENDING = 'PENDING',
     APPROVED = 'APPROVED',
     REJECTED = 'REJECTED',
@@ -18,10 +18,10 @@ export abstract class AbstractAdoptionEntity {
 
     @Column({
         type: 'enum',
-        enum: AdoptionStatus,
-        default: AdoptionStatus.PENDING,
+        enum: AdoptionApprovalStatus,
+        default: AdoptionApprovalStatus.PENDING,
     })
-    status: AdoptionStatus;
+    approvalStatus: AdoptionApprovalStatus;
 
     @Column({ nullable: true})
     adopterEmail?: string;
