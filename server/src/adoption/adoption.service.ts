@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { Adoption } from '../@types';
 import { AdoptDogDto } from '../dtos/adopt-dog.dto';
 import { AdoptionRepository } from './adoption.repository';
 import { AdoptionStatus, AdoptionType } from '../entities/abstract.adoption';
 import { DogsService } from '../dogs/dogs.service';
-import { DogStatus } from '../entities/dog.entity';
+import { DogStatus, EligibleFor } from '../entities/dog.entity';
 
 @Injectable()
 export class AdoptionService {
@@ -14,7 +14,13 @@ export class AdoptionService {
     ) { }
 
     async createAdoption(dto: AdoptDogDto): Promise<Adoption> {
-        return this.adoptionRepository.createAdoption(dto)
+        const dog = await this.dogService.getById(dto.dogId);
+
+        if (dog.eligibleFor === EligibleFor.VIRTUAL_ONLY && dto.type !== AdoptionType.VIRTUAL) {
+            throw new BadRequestException('This dog is only eligible for virtual adoption');
+        }
+
+        return this.adoptionRepository.createAdoption(dto, dog)
     }
 
     async processAdoption(id: number, status: AdoptionStatus) {
