@@ -1,13 +1,13 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { StandardAdoption } from '../entities/standard-adoption.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { VirtualAdoption } from '../entities/virtual-adoption.entity';
 import { TemporaryAdoption } from '../entities/temporary-adoption.entity';
 import { AdoptDogDto } from '../dtos/adopt-dog.dto';
-import { DogsService } from '../dogs/dogs.service';
 import { Adoption } from '../@types';
 import { AdoptionStatus, AdoptionType } from '../entities/abstract.adoption';
+import { DogEntity } from '../entities/dog.entity';
 
 @Injectable()
 export class AdoptionRepository {
@@ -18,10 +18,9 @@ export class AdoptionRepository {
         private readonly virtualAdoptionRepository: Repository<VirtualAdoption>,
         @InjectRepository(TemporaryAdoption)
         private readonly temporaryAdoptionRepository: Repository<TemporaryAdoption>,
-        private readonly dogService: DogsService
     ) { }
 
-    async createAdoption(dto: AdoptDogDto): Promise<Adoption> {
+    async createAdoption(dto: AdoptDogDto, dog?: DogEntity): Promise<Adoption> {
         let repository: Repository<any>;
 
         switch (dto.type) {
@@ -37,8 +36,6 @@ export class AdoptionRepository {
             default:
                 throw new BadRequestException('Invalid adoption type');
         }
-
-        const dog = await this.dogService.getById(dto.dogId);
 
         const newAdoption = repository.create({
             type: dto.type,
