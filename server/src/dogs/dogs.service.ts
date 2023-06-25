@@ -27,7 +27,7 @@ export class DogsService {
   /**
    * Returns all dog entities with status = Status.AVAILABLE that match the given filter
    */
-  async getAvailable(dto: DogsFilter) {
+  async getManyAvailable(dto: DogsFilter) {
     const qb = this.getDogsQuery(dto);
 
     qb.andWhere("dog.status = :status", { status: DogStatus.AVAILABLE });
@@ -38,7 +38,7 @@ export class DogsService {
   /**
    * Returns all dog entities that match the given filter.
    */
-  async get(dto: AdminDogsFilter) {
+  async getMany(dto: AdminDogsFilter) {
     const qb = this.getDogsQuery(dto);
 
     if (dto.status && dto.status !== StatusFilter.ALL) {
@@ -91,31 +91,31 @@ export class DogsService {
   }
 
   /**
-   * Returns single dog entity based on given id. Throws NotFoundException if dog is not found
+   * Returns single dog entity based on given id.
    */
-  async getById(id: number, session?: Record<string, any>) {
+  async getAvailableById(id: number ) {
+    const options: FindOneOptions<DogEntity> = {
+      where: { id, status: DogStatus.AVAILABLE  },
+    };
+
+    return this.dogRepository.findOne(options);
+  }
+
+  async getById(id: number) {
     const options: FindOneOptions<DogEntity> = {
       where: { id },
     };
 
-    if (!isLoggedInUser()) {
-      (options.where as FindOptionsWhere<DogEntity>).status = DogStatus.AVAILABLE;
-    }
-
-    const dog = await this.dogRepository.findOne(options);
-
-    return dog;
-
-    function isLoggedInUser() {
-      return !!session?.userId;
-    }
+    return this.dogRepository.findOne(options);
   }
 
   /**
    * Updates dog entity according to given data. Throws NotFoundException if dog is not found
    */
   async update(id: number, dto: UpdateDogDto) {
-    const dog = await this.getById(id);
+    const dog = await this.getAvailableById(id);
+
+    if(!dog) throw new NotFoundException('Dog not found');
 
     return this.dogRepository.save({ ...dog, ...dto });
   }

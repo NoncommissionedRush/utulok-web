@@ -14,7 +14,7 @@ export class AdoptionService {
     ) { }
 
     async createAdoption(dto: AdoptDogDto): Promise<Adoption> {
-        const dog = await this.dogService.getById(dto.dogId);
+        const dog = await this.dogService.getAvailableById(dto.dogId);
 
         if (dog.eligibleFor === EligibleFor.VIRTUAL_ONLY && dto.type !== AdoptionType.VIRTUAL) {
             throw new BadRequestException('This dog is only eligible for virtual adoption');
