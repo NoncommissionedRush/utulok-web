@@ -5,6 +5,6 @@ import { Adoption } from "../@types";
 
 @Entity()
 export class StandardAdoption extends AbstractAdoptionEntity implements Adoption {
-  @OneToOne(() => DogEntity, dog => dog.adoption)
+  @OneToOne(() => DogEntity, dog => dog.adoption, { eager: true})
   dog: DogEntity
 }
