@@ -1,5 +1,5 @@
 import "./globals.css";
-import Nav from "../components/Nav";
+import Header from "../components/Header";
 import Footer from "@/components/Footer";
 
 export const metadata = {
@@ -14,8 +14,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="pt-10">
-        <Nav />
+      <body className="bg-theme-light pt-10 overflow-x-hidden">
+        <Header />
         <main className="flex min-h-screen flex-col">{children}</main>
         <Footer />
       </body>
