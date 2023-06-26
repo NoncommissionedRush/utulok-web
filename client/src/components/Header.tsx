@@ -9,8 +9,8 @@ export default function Header() {
   // Disable scroll when mobile nav is open
   useEffect(() => {
     isOpen
-      ? (document.body.style.overflow = "hidden")
-      : (document.body.style.overflow = "auto");
+      ? (document.body.style.overflowY = "hidden")
+      : (document.body.style.overflowY = "auto");
   }, [isOpen]);
 
   return (
@@ -18,8 +18,8 @@ export default function Header() {
       <div>LOGO</div>
 
       <div
-        className={`w-full h-screen bg-theme-yellow border-t border-black lg:border-t-0 lg:h-auto flex flex-col lg:flex-row items-center text-center gap-10 lg:justify-between p-3 lg:p-0 absolute lg:relative top-full left-0 transform translate-x-full lg:translate-x-0 transition-transform duration-500 lg:transition-none ${
-          isOpen ? "transform translate-x-0" : "transform translate-x-full"
+        className={`w-full h-screen bg-theme-yellow border-t border-black lg:border-t-0 lg:h-auto flex flex-col lg:flex-row items-center text-center gap-10 lg:justify-between p-3 lg:p-0 absolute lg:relative top-full left-0 transform lg:translate-x-0 transition-transform duration-500 lg:transition-none ${
+          isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         <nav className="mx-auto">
@@ -76,7 +76,7 @@ export default function Header() {
         </div>
       </div>
       <button className="lg:hidden" onClick={() => setIsOpen(!isOpen)}>
-        💩
+        🐶
       </button>
     </header>
   );
