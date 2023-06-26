@@ -2,6 +2,7 @@ import { BeforeInsert, Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryG
 import { VirtualAdoption } from "./virtual-adoption.entity";
 import { StandardAdoption } from "./standard-adoption.entity";
 import { TemporaryAdoption } from "./temporary-adoption.entity";
+import { Dog } from "../@types";
 
 export enum Size {
   SMALL = "small",
@@ -10,8 +11,8 @@ export enum Size {
 }
 
 export enum Sex {
-  MALE,
-  FEMALE,
+  MALE = 'male',
+  FEMALE = 'female',
 }
 
 export enum Age {
@@ -33,7 +34,7 @@ export enum EligibleFor {
 }
 
 @Entity()
-export class DogEntity {
+export class DogEntity implements Dog {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -73,22 +74,21 @@ export class DogEntity {
   eligibleFor: EligibleFor;
 
   @Column({ nullable: true })
-  breed?: string;
+  breed: string;
 
   @Column({ nullable: true })
-  color?: string;
+  color: string;
 
   @Column({ nullable: true })
-  isKidFriendly?: boolean;
+  isKidFriendly: boolean;
 
   @Column({ nullable: true })
-  isVaccinated?: boolean;
+  isVaccinated: boolean;
 
   @Column({ nullable: true })
-  isCastraded?: boolean;
+  isCastrated: boolean;
 
   @OneToOne(() => StandardAdoption, adoption => adoption.dog)
-  @JoinColumn()
   adoption: StandardAdoption[]
 
   @OneToOne(() => TemporaryAdoption, adoption => adoption.dog)

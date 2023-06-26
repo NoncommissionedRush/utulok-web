@@ -1,55 +1,105 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { Adoption } from '../@types';
 import { AdoptDogDto } from '../dtos/adopt-dog.dto';
 import { AdoptionRepository } from './adoption.repository';
-import { AdoptionStatus, AdoptionType } from '../entities/abstract.adoption';
+import { AdoptionApprovalStatus, AdoptionType } from '../entities/abstract.adoption';
 import { DogsService } from '../dogs/dogs.service';
-import { DogStatus } from '../entities/dog.entity';
+import { DogEntity, EligibleFor } from '../entities/dog.entity';
+import { ProcessAdoptionDto } from '../dtos/process-adoption.dto';
+import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
+import { Events } from '../events';
 
 @Injectable()
 export class AdoptionService {
     constructor(
         private readonly adoptionRepository: AdoptionRepository,
-        private readonly dogService: DogsService
+        private readonly dogService: DogsService,
+        private readonly eventEmitter: EventEmitter2
     ) { }
 
+    /**
+     * Creates new adoption entity of the given type and saves it to database.
+     * 
+     * Throws BadRequestException if dog is not eligible for the given adoption type.
+     */
     async createAdoption(dto: AdoptDogDto): Promise<Adoption> {
-        return this.adoptionRepository.createAdoption(dto)
+        const dog = await this.dogService.getAvailableById(dto.dogId);
+
+        if (dog.eligibleFor === EligibleFor.VIRTUAL_ONLY && dto.type !== AdoptionType.VIRTUAL) {
+            throw new BadRequestException('This dog is only eligible for virtual adoption');
+        }
+
+        await this.validateDuplicateAdoption(dto)
+
+        return this.adoptionRepository.createAdoption(dto, dog)
     }
 
-    async processAdoption(id: number, status: AdoptionStatus) {
-        const adoption = await this.adoptionRepository.get(id)
+    private async validateDuplicateAdoption(dto: AdoptDogDto): Promise<void> {
+        const existing = await this.adoptionRepository.findOneBy({
+            type: dto.type,
+            adopterEmail: dto.email,
+            dog: { id: dto.dogId },
+        });
+
+        if (existing) {
+            throw new BadRequestException('Duplicate adoption entry');
+        }
+    }
+
+    /**
+     * Processes an adoption based on its type and status. 
+     * 
+     * Throws NotFoundException if adoption is not found.
+     */
+    async processAdoption(dto: ProcessAdoptionDto) {
+        const adoption = await this.adoptionRepository.findOneBy({ id: dto.id, type: dto.type })
+
+        if (!adoption) throw new NotFoundException('Adoption not found');
 
         if (adoption.type === AdoptionType.STANDARD) {
-            this.processStandardAdoption(adoption, status);
+            this.processStandardAdoption(adoption, dto.status);
         }
 
-        if(adoption.type === AdoptionType.TEMPORARY) {
-            this.processTemporaryAdoption(adoption, status);
+        if (adoption.type === AdoptionType.TEMPORARY) {
+            this.processTemporaryAdoption(adoption, dto.status);
         }
     }
 
-    async getPendingAdoptions(){
+    /**
+     * Returns all adoptions with status 'pending'
+     */
+    async getPendingAdoptions() {
         return this.adoptionRepository.getPendingAdoptions();
     }
 
-    private processStandardAdoption(adoption: Adoption, status: AdoptionStatus) {
-        if (status === AdoptionStatus.APPROVED) {
-            this.adoptionRepository.update(adoption.id, { status });
+    private async processStandardAdoption(adoption: Adoption, status: AdoptionApprovalStatus) {
+        if (status === AdoptionApprovalStatus.APPROVED) {
+            await this.eventEmitter.emitAsync(Events.ADOPTION_STANDARD_APPROVED, adoption)
 
-            this.dogService.update(adoption.dog.id, { status: DogStatus.ADOPTED });
+            const setAdoptionStatus = this.adoptionRepository.setAdoptionStatus(adoption, status)
 
-            this.adoptionRepository.deleteTemporaryAdoptions(adoption.dog.id)
+            const deleteVirtual = this.adoptionRepository.deleteVirtualAdoptions(adoption.dog.id)
 
-            this.adoptionRepository.deleteVirtualAdoptions(adoption.dog.id)
+            const deleteTemporary = this.adoptionRepository.deleteTemporaryAdoption(adoption.dog.id)
+
+            await Promise.all([setAdoptionStatus, deleteVirtual, deleteTemporary])
         }
 
-        if (status === AdoptionStatus.REJECTED) {
-            this.adoptionRepository.delete(adoption.id);
+        if (status === AdoptionApprovalStatus.REJECTED) {
+            await this.adoptionRepository.remove(adoption)
         }
     }
 
-    private processTemporaryAdoption(adoption: Adoption, status: AdoptionStatus) {
-        this.adoptionRepository.update(adoption.id, { status });
+    private processTemporaryAdoption(adoption: Adoption, status: AdoptionApprovalStatus) {
+        this.adoptionRepository.setAdoptionStatus(adoption, status)
+    }
+
+    @OnEvent(Events.DOG_DECEASED)
+    async handleDogDeceased(dog: DogEntity) {
+        const deleteVirtual = this.adoptionRepository.deleteVirtualAdoptions(dog.id)
+
+        const deleteTemporary = this.adoptionRepository.deleteTemporaryAdoption(dog.id)
+
+        return Promise.all([deleteVirtual, deleteTemporary])
     }
 }

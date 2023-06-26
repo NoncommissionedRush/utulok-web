@@ -4,11 +4,12 @@ import { DogsController } from './dogs.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DogEntity } from 'src/entities/dog.entity';
 import { AdoptionModule } from '../adoption/adoption.module';
+import { AdminController } from './admin.controller';
 
 @Module({
   imports: [forwardRef(() => AdoptionModule), TypeOrmModule.forFeature([DogEntity])],
   providers: [DogsService],
-  controllers: [DogsController],
+  controllers: [DogsController, AdminController],
   exports: [DogsService]
 })
 export class DogsModule {}

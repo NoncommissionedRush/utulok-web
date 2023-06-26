@@ -10,6 +10,7 @@ import { AuthModule } from "./auth/auth.module";
 import { dbConfig, s3Config, sessionConfig } from "./config/configuration";
 import { S3Module } from './s3/s3.module';
 import { AdoptionModule } from './adoption/adoption.module';
+import { EventEmitterModule } from "@nestjs/event-emitter";
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { AdoptionModule } from './adoption/adoption.module';
       inject: [ConfigService],
       useFactory: async (config: ConfigService) => config.get("database"),
     }),
+    EventEmitterModule.forRoot(),
     UsersModule,
     DogsModule,
     AuthModule,
