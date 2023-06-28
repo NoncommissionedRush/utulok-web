@@ -1,10 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const currentRoute = usePathname();
 
   // Disable scroll when mobile nav is open
   useEffect(() => {
@@ -13,71 +16,70 @@ export default function Header() {
       : (document.body.style.overflowY = "auto");
   }, [isOpen]);
 
-  return (
-    <header className="fixed top-0 flex justify-between w-full bg-theme-yellow p-3 z-50">
-      <div>LOGO</div>
+  const navLinks = [
+    { title: "Domov", path: "/" },
+    { title: "O nás", path: "/onas" },
+    { title: "Naše psíky", path: "/psiky" },
+    { title: "Ako pomôcť", path: "/pomoc" },
+    { title: "Kontakt", path: "/kontakt" },
+  ];
 
-      <div
-        className={`w-full h-screen bg-theme-yellow border-t border-black lg:border-t-0 lg:h-auto flex flex-col lg:flex-row items-center text-center gap-10 lg:justify-between p-3 lg:p-0 absolute lg:relative top-full left-0 transform lg:translate-x-0 transition-transform duration-500 lg:transition-none ${
-          isOpen ? "translate-x-0" : "translate-x-full"
-        }`}
-      >
-        <nav className="mx-auto">
-          <ul className="flex flex-col lg:flex-row gap-10 lg:gap-3">
-            <li>
-              <Link
-                href="/"
-                className="hover:underline"
-                onClick={() => isOpen && setIsOpen(false)}
-              >
-                Domov
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/onas"
-                className="hover:underline"
-                onClick={() => isOpen && setIsOpen(false)}
-              >
-                O nás
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/psiky"
-                className="hover:underline"
-                onClick={() => isOpen && setIsOpen(false)}
-              >
-                Naše psíky
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/pomoc"
-                className="hover:underline"
-                onClick={() => isOpen && setIsOpen(false)}
-              >
-                Ako pomôcť
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/kontakt"
-                className="hover:underline"
-                onClick={() => isOpen && setIsOpen(false)}
-              >
-                Kontakt
-              </Link>
-            </li>
-          </ul>
-        </nav>
-        <div className="border border-black lg:border-0 p-3 lg:p-0">
-          <Link href="tel:+421000000000">+421 000 000 000</Link>
+  const linkStyles =
+    "px-5 py-1 rounded-3xl text-theme-pink border-2 border-theme-pink hover:bg-theme-pink hover:text-theme-light";
+
+  return (
+    <header className="fixed top-0 w-full bg-theme-yellow z-50">
+      <div className="container flex justify-between py-3">
+        <div className="text-theme-pink font-bold">
+          {" "}
+          <Image
+            src={"/utulok-logo.png"}
+            alt="Dog shelter logo"
+            width={35}
+            height={35}
+          />
         </div>
+
+        <div
+          className={`w-full h-screen bg-theme-yellow border-t border-black lg:border-t-0 lg:h-auto flex flex-col lg:flex-row items-center text-center gap-10 lg:gap-0 lg:justify-between p-3 lg:p-0 absolute lg:relative top-full left-0 transform lg:translate-x-0 transition-transform duration-500 lg:transition-none ${
+            isOpen ? "translate-x-0" : "translate-x-full"
+          }`}
+        >
+          <nav className="mx-auto mt-5 lg:mt-0">
+            <ul className="flex flex-col lg:flex-row gap-10 lg:gap-3">
+              {navLinks.map((link, idx) => {
+                return (
+                  <li key={idx}>
+                    <Link
+                      href={link.path}
+                      className={
+                        linkStyles +
+                        (currentRoute === link.path
+                          ? " bg-theme-pink text-theme-light"
+                          : "")
+                      }
+                      onClick={() => isOpen && setIsOpen(false)}
+                    >
+                      {link.title}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
+          <div className="border-2 border-theme-pink border-dotted lg:border-0 p-3 lg:p-0 hover:scale-110 transition">
+            <Link
+              href="tel:+421000000000"
+              className="font-bold text-theme-pink text-stroke"
+            >
+              +421 000 000 000
+            </Link>
+          </div>
+        </div>
+        <button className="lg:hidden" onClick={() => setIsOpen(!isOpen)}>
+          🐶
+        </button>
       </div>
-      <button className="lg:hidden" onClick={() => setIsOpen(!isOpen)}>
-        🐶
-      </button>
     </header>
   );
 }
