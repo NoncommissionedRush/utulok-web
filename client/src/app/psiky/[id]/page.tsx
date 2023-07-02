@@ -3,8 +3,13 @@ import BackBtn from "@/components/BackBtn";
 
 async function getDog(id: string) {
   const res = await fetch(`https://dummyjson.com/users/${id}`, {
-    next: { revalidate: 10 },
+    next: { revalidate: 300 },
   });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+
   const data = await res.json();
   return data;
 }

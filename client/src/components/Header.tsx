@@ -25,7 +25,7 @@ export default function Header() {
   ];
 
   const linkStyles =
-    "px-5 py-1 rounded-3xl text-theme-pink border-2 border-theme-pink hover:bg-theme-pink hover:text-theme-light";
+    "px-5 py-1 rounded-3xl border-2 border-theme-pink hover:bg-theme-pink hover:text-theme-light";
 
   return (
     <header className="fixed top-0 w-full bg-theme-yellow z-50">
@@ -56,7 +56,7 @@ export default function Header() {
                         linkStyles +
                         (currentRoute === link.path
                           ? " bg-theme-pink text-theme-light"
-                          : "")
+                          : " text-theme-pink")
                       }
                       onClick={() => isOpen && setIsOpen(false)}
                     >
