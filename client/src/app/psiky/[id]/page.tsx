@@ -17,20 +17,25 @@ async function getDog(id: string) {
 export default async function DogsPage({ params }: any) {
   const user = await getDog(params.id);
   return (
-    <div className="container flex flex-col items-start">
-      <BackBtn />
-      <h1>dogs/{user.id}</h1>
-      <div className="border border-black border-dotted rounded-xl text-center">
-        <Image
-          src={user.image}
-          alt="user image"
-          width={200}
-          height={200}
-          className="mx-auto"
-        />
-        <h1 className="text-xl mb-2">{user.firstName + user.lastName}</h1>
-        <p className="mb-2">{user.email}</p>
+    <section className="min-h-screen w-full scroll-mt-10">
+      <div className="container flex flex-col items-start">
+        <BackBtn />
+        <h1>psiky/{user.id}</h1>
+        <div className="flex flex-col p-2 border border-black border-dotted rounded-xl text-center">
+          <Image
+            src={user.image}
+            alt="user image"
+            width={200}
+            height={200}
+            className="mx-auto"
+            placeholder="blur"
+            blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg=="
+          />
+
+          <h1 className="text-xl mb-2">{user.firstName + user.lastName}</h1>
+          <p className="mb-2">{user.email}</p>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }

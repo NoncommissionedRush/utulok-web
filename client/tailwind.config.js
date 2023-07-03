@@ -22,6 +22,9 @@ module.exports = {
         "theme-pink": "#E4647B",
         "theme-green": "#64BAC3",
       },
+      gridTemplateColumns: {
+        "dog-grid": "repeat(auto-fill, 300px)",
+      },
     },
   },
   plugins: [],

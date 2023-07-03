@@ -25,7 +25,7 @@ export default function Header() {
   ];
 
   const linkStyles =
-    "px-5 py-1 rounded-3xl border-2 border-theme-pink hover:bg-theme-pink hover:text-theme-light";
+    "px-5 py-1 rounded-3xl border-2 border-theme-pink hover:bg-theme-pink hover:text-theme-light hover:shadow-none";
 
   return (
     <header className="fixed top-0 w-full bg-theme-yellow z-50">
@@ -55,8 +55,11 @@ export default function Header() {
                       className={
                         linkStyles +
                         (currentRoute === link.path
-                          ? " bg-theme-pink text-theme-light"
-                          : " text-theme-pink")
+                          ? " bg-theme-pink text-theme-light shadow-none"
+                          : " text-theme-pink") +
+                        (link.path === "/psiky"
+                          ? " shadow-[3px_4px_0px_2px_#E4647B]"
+                          : "")
                       }
                       onClick={() => isOpen && setIsOpen(false)}
                     >
