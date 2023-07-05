@@ -23,7 +23,7 @@ module.exports = {
         "theme-green": "#64BAC3",
       },
       gridTemplateColumns: {
-        "dog-grid": "repeat(auto-fill, 300px)",
+        "dog-grid": "repeat(auto-fill, 250px)",
       },
     },
   },

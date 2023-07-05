@@ -17,11 +17,11 @@ async function getDog(id: string) {
 export default async function DogsPage({ params }: any) {
   const user = await getDog(params.id);
   return (
-    <section className="min-h-screen w-full scroll-mt-10">
-      <div className="container flex flex-col items-start">
+    <section className="min-h-screen w-full scroll-mt-14">
+      <div className="container flex flex-col">
         <BackBtn />
-        <h1>psiky/{user.id}</h1>
-        <div className="flex flex-col p-2 border border-black border-dotted rounded-xl text-center">
+        <h1 className="mx-auto">psiky/{user.id}</h1>
+        <div className="flex flex-col p-2 w-max mx-auto border-4 border-theme-yellow border-dotted rounded-xl text-center">
           <Image
             src={user.image}
             alt="user image"
@@ -31,7 +31,6 @@ export default async function DogsPage({ params }: any) {
             placeholder="blur"
             blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg=="
           />
-
           <h1 className="text-xl mb-2">{user.firstName + user.lastName}</h1>
           <p className="mb-2">{user.email}</p>
         </div>

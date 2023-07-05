@@ -54,7 +54,8 @@ export default function Header() {
                       href={link.path}
                       className={
                         linkStyles +
-                        (currentRoute === link.path
+                        (currentRoute === link.path ||
+                        currentRoute.includes(link.path.replace(/\/+$/, " "))
                           ? " bg-theme-pink text-theme-light shadow-none"
                           : " text-theme-pink") +
                         (link.path === "/psiky"
