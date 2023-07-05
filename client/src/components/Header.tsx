@@ -26,6 +26,8 @@ export default function Header() {
 
   const linkStyles =
     "px-5 py-1 rounded-3xl border-2 border-theme-pink hover:bg-theme-pink hover:text-theme-light hover:shadow-none";
+  const hamburgerLineStyles =
+    "h-1 w-6 my-0.5 rounded-full bg-black transition ease transform duration-300";
 
   return (
     <header className="fixed top-0 w-full bg-theme-yellow z-50">
@@ -80,8 +82,21 @@ export default function Header() {
             </Link>
           </div>
         </div>
-        <button className="lg:hidden" onClick={() => setIsOpen(!isOpen)}>
-          🐶
+        <button
+          className="lg:hidden flex flex-col justify-center items-center group"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          <div
+            className={`${hamburgerLineStyles} ${
+              isOpen && "rotate-45 translate-y-2"
+            }`}
+          />
+          <div className={`${hamburgerLineStyles} ${isOpen && "opacity-0"}`} />
+          <div
+            className={`${hamburgerLineStyles} ${
+              isOpen && "-rotate-45 -translate-y-2"
+            }`}
+          />
         </button>
       </div>
     </header>
