@@ -24,8 +24,12 @@ export default function Header() {
     { title: "Kontakt", path: "/kontakt" },
   ];
 
+  const navStyles =
+    "w-full h-screen bg-theme-yellow border-t border-black lg:border-t-0 lg:h-auto flex flex-col lg:flex-row items-center text-center gap-10 lg:gap-0 lg:justify-between p-3 lg:p-0 absolute lg:relative top-full left-0 transform lg:translate-x-0 transition-transform duration-500 lg:transition-none";
+
   const linkStyles =
     "px-5 py-1 rounded-3xl border-2 border-theme-pink hover:bg-theme-pink hover:text-theme-light hover:shadow-none";
+
   const hamburgerLineStyles =
     "h-1 w-6 my-0.5 rounded-full bg-black transition ease transform duration-300";
 
@@ -39,11 +43,12 @@ export default function Header() {
             alt="Dog shelter logo"
             width={35}
             height={35}
+            priority
           />
         </div>
 
         <div
-          className={`w-full h-screen bg-theme-yellow border-t border-black lg:border-t-0 lg:h-auto flex flex-col lg:flex-row items-center text-center gap-10 lg:gap-0 lg:justify-between p-3 lg:p-0 absolute lg:relative top-full left-0 transform lg:translate-x-0 transition-transform duration-500 lg:transition-none ${
+          className={`${navStyles} ${
             isOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
@@ -54,16 +59,20 @@ export default function Header() {
                   <li key={idx}>
                     <Link
                       href={link.path}
-                      className={
-                        linkStyles +
-                        (currentRoute === link.path ||
-                        currentRoute.includes(link.path.replace(/\/+$/, " "))
-                          ? " bg-theme-pink text-theme-light shadow-none"
-                          : " text-theme-pink") +
-                        (link.path === "/psiky"
-                          ? " shadow-[3px_4px_0px_2px_#E4647B]"
-                          : "")
-                      }
+                      className={`
+                        ${linkStyles}
+                        ${
+                          currentRoute === link.path ||
+                          currentRoute.includes(link.path.replace(/\/+$/, " "))
+                            ? " bg-theme-pink text-theme-light shadow-none"
+                            : " text-theme-pink"
+                        } 
+                        ${
+                          link.path === "/psiky"
+                            ? " shadow-[3px_4px_0px_2px_#E4647B]"
+                            : ""
+                        }
+                      `}
                       onClick={() => isOpen && setIsOpen(false)}
                     >
                       {link.title}
