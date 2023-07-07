@@ -60,102 +60,96 @@ export default function ContactForm() {
   };
 
   return (
-    <>
-      {formMessage ? (
-        <h1 className="md:w-1/2 my-3 px-8 pt-6 pb-8 text-xl text-theme-pink text-center">
-          {formMessage}
-        </h1>
-      ) : (
-        <form
-          onSubmit={submitForm}
-          className="md:w-1/2 bg-theme-light text-theme-pink border-2 border-theme-pink rounded-2xl px-8 pt-6 pb-8 shadow-[3px_4px_0px_2px_#000]"
+    <form
+      onSubmit={submitForm}
+      className="md:w-4/5 bg-theme-light text-theme-pink border-2 border-theme-pink rounded-2xl px-8 pt-6 pb-8 shadow-[3px_4px_0px_2px_#000]"
+    >
+      <div className="mb-4">
+        <label className="block text-theme-pink text-small mb-2" htmlFor="name">
+          Meno
+        </label>
+        <input
+          onChange={handleInput}
+          value={formData.name}
+          className="appearance-none bg-theme-light border border-theme-pink rounded w-full py-2 px-3 text-theme-pink focus:outline-none focus:border-theme-yellow"
+          name="name"
+          id="name"
+          type="text"
+          //placeholder="Vaše meno"
+          required
+        />
+      </div>
+      <div className="mb-4">
+        <label
+          className="block text-theme-pink text-small mb-2"
+          htmlFor="phone"
         >
-          <div className="mb-4">
-            <label
-              className="block text-theme-pink text-small mb-2"
-              htmlFor="name"
-            >
-              Meno
-            </label>
-            <input
-              onChange={handleInput}
-              value={formData.name}
-              className="appearance-none bg-theme-light border border-theme-pink rounded w-full py-2 px-3 text-theme-pink focus:outline-none focus:border-theme-yellow"
-              name="name"
-              id="name"
-              type="text"
-              //placeholder="Vaše meno"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              className="block text-theme-pink text-small mb-2"
-              htmlFor="phone"
-            >
-              Telefón
-            </label>
-            <input
-              onChange={handleInput}
-              value={formData.phone}
-              className="appearance-none bg-theme-light border border-theme-pink rounded w-full py-2 px-3 text-theme-pink text-small mb-3 focus:outline-none focus:border-theme-yellow"
-              name="phone"
-              id="phone"
-              type="text"
-              //placeholder="Telefónne číslo"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              className="block text-theme-pink text-small mb-2"
-              htmlFor="email"
-            >
-              Email
-            </label>
-            <input
-              onChange={handleInput}
-              value={formData.email}
-              className="appearance-none bg-theme-light border border-theme-pink rounded w-full py-2 px-3 text-theme-pink text-small mb-3 focus:outline-none focus:border-theme-yellow"
-              name="email"
-              id="email"
-              type="email"
-              //placeholder="Váš email"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label
-              className="block text-theme-pink text-small mb-2"
-              htmlFor="message"
-            >
-              Správa
-            </label>
-            <input type="text" name="_honey" className="hidden" />
-            <textarea
-              onChange={handleInput}
-              value={formData.message}
-              className="appearance-none bg-theme-light border border-theme-pink rounded w-full py-2 px-3 text-theme-pink mb-3 focus:outline-none focus:border-theme-yellow"
-              name="message"
-              id="message"
-              cols={30}
-              rows={4}
-              //placeholder="Vaša správa"
-              required
-            />
-          </div>
+          Telefón
+        </label>
+        <input
+          onChange={handleInput}
+          value={formData.phone}
+          className="appearance-none bg-theme-light border border-theme-pink rounded w-full py-2 px-3 text-theme-pink text-small mb-3 focus:outline-none focus:border-theme-yellow"
+          name="phone"
+          id="phone"
+          type="text"
+          //placeholder="Telefónne číslo"
+          required
+        />
+      </div>
+      <div className="mb-4">
+        <label
+          className="block text-theme-pink text-small mb-2"
+          htmlFor="email"
+        >
+          Email
+        </label>
+        <input
+          onChange={handleInput}
+          value={formData.email}
+          className="appearance-none bg-theme-light border border-theme-pink rounded w-full py-2 px-3 text-theme-pink text-small mb-3 focus:outline-none focus:border-theme-yellow"
+          name="email"
+          id="email"
+          type="email"
+          //placeholder="Váš email"
+          required
+        />
+      </div>
+      <div className="mb-4">
+        <label
+          className="block text-theme-pink text-small mb-2"
+          htmlFor="message"
+        >
+          Správa
+        </label>
+        <input type="text" name="_honey" className="hidden" />
+        <textarea
+          onChange={handleInput}
+          value={formData.message}
+          className="appearance-none bg-theme-light border border-theme-pink rounded w-full py-2 px-3 text-theme-pink mb-3 focus:outline-none focus:border-theme-yellow"
+          name="message"
+          id="message"
+          cols={30}
+          rows={4}
+          //placeholder="Vaša správa"
+          required
+        />
+      </div>
 
-          <button
-            className="w-28 px-5 py-1 bg-theme-pink text-theme-light rounded-3xl border-2 border-theme-pink hover:bg-theme-light hover:text-theme-pink"
-            name="message"
-            id="message"
-            type="submit"
-            disabled={isSending}
-          >
-            {isSending ? <Spinner /> : "Odoslať"}
-          </button>
-        </form>
-      )}
-    </>
+      <div className="flex justify-between items-center">
+        <button
+          className="w-28 px-5 py-1 bg-theme-pink text-theme-light rounded-3xl border-2 border-theme-pink hover:bg-theme-light hover:text-theme-pink"
+          name="message"
+          id="message"
+          type="submit"
+          disabled={isSending}
+        >
+          {isSending ? <Spinner /> : "Odoslať"}
+        </button>
+        {formMessage && (
+          <p className="bg-slate-100 p-3 rounded shadow-lg">{formMessage}</p>
+        )}
+      </div>
+    </form>
   );
 }

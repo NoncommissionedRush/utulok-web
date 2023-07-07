@@ -8,8 +8,10 @@ export default function Contact() {
       <div className="container flex flex-col">
         <h1 className="my-3 text-2xl font-bold">Kontakt</h1>
 
-        <div className="flex flex-col md:flex-row justify-around my-14">
-          <ContactForm />
+        <div className="flex flex-col md:flex-row items-center my-14">
+          <div className="md:w-1/2">
+            <ContactForm />
+          </div>
           <div className="mt-14 md:mt-0 mx-auto">
             <a href="https://www.google.com/maps/@48.1961669,17.0764262,14z?entry=ttu">
               <Image
@@ -19,16 +21,11 @@ export default function Contact() {
                 height={350}
                 priority
                 className="hover:scale-95 transition"
+                placeholder="blur"
+                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg=="
               />
             </a>
             <div className="flex flex-col gap-6 mt-10 text-theme-pink text-xl text-center">
-              <p>
-                <span className="text-2xl">OZ Útulok</span>
-                <br />
-                Utekáč 666
-                <br />
-                Slovensko
-              </p>
               <div className="flex justify-center items-center">
                 <MdOutlinePlace className="text-3xl" />
                 <a href="https://www.google.com/maps/@48.1961669,17.0764262,14z?entry=ttu">
@@ -36,6 +33,18 @@ export default function Contact() {
                   <p>8.209696, 17.083121</p>
                 </a>
               </div>
+              <p>
+                <span className="text-2xl">OZ Útulok</span>
+                <br />
+                Utekáč 666
+                <br />
+                Slovensko
+              </p>
+              <p>
+                IČO: 123 456 789
+                <br />
+                DIČ: 123 456 789
+              </p>
             </div>
           </div>
         </div>

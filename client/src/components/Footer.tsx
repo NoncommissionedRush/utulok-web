@@ -1,10 +1,11 @@
 import { FaFacebook } from "react-icons/fa";
 import { BsInstagram } from "react-icons/bs";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Footer() {
   return (
-    <footer className="flex flex-col gap-5 justify-center items-center text-center p-10 mt-auto bg-yellow-300 text-theme-pink">
+    <footer className="relative flex flex-col gap-5 justify-center items-center text-center p-10 mt-auto bg-yellow-300 text-theme-pink">
       <div className="flex gap-5 text-2xl">
         <Link href="#" className="hover:text-theme-light">
           {" "}
@@ -37,6 +38,13 @@ export default function Footer() {
           +421 000 000 000
         </a>
       </div>
+      <Image
+        src={"/pes.png"}
+        alt="psik nezbednik"
+        width={30}
+        height={30}
+        className="absolute bottom-0"
+      />
     </footer>
   );
 }

@@ -9,7 +9,7 @@ export const metadata = {
 };
 
 const roboto = Roboto({
-  weight: ["500", "700"],
+  weight: ["500", "900"],
   subsets: ["latin"],
   display: "swap",
 });

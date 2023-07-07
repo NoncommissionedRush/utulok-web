@@ -7,10 +7,81 @@ html {
 }
 
 .text-stroke {
-  -webkit-text-stroke: 0.75px white;
+  -webkit-text-stroke: 0.6px white;
 }
 
 .text-stroke-bold {
   -webkit-text-stroke: 1px white;
   -webkit-text-fill-color: transparent;
+}
+.wave-container {
+  height: 40vh;
+  background-color: #20b2aa;
+  position: relative;
+}
+
+/* Wave divider 1 */
+.custom-shape-divider-bottom-1688744264 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom-1688744264 svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 77px;
+}
+
+.custom-shape-divider-bottom-1688744264 .shape-fill {
+  fill: #e4647b;
+}
+
+/* Wave divider 2 */
+.custom-shape-divider-bottom-1688744883 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom-1688744883 svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 77px;
+}
+
+.custom-shape-divider-bottom-1688744883 .shape-fill {
+  fill: #fffef5;
+}
+
+/* Wave divider 3 */
+.custom-shape-divider-bottom-1688744991 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom-1688744991 svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 77px;
+}
+
+.custom-shape-divider-bottom-1688744991 .shape-fill {
+  fill: #64bac3;
 }

@@ -37,14 +37,16 @@ export default function Header() {
     <header className="fixed top-0 w-full bg-theme-yellow z-50">
       <div className="container flex justify-between py-3">
         <div className="text-theme-pink font-bold">
-          {" "}
-          <Image
-            src={"/utulok-logo.png"}
-            alt="Dog shelter logo"
-            width={35}
-            height={35}
-            priority
-          />
+          <Link href={"/"}>
+            <Image
+              src={"/utulok-logo.png"}
+              alt="Dog shelter logo"
+              width={35}
+              height={35}
+              priority
+              className="rounded-full"
+            />
+          </Link>
         </div>
 
         <div
@@ -53,7 +55,7 @@ export default function Header() {
           }`}
         >
           <nav className="mx-auto mt-5 lg:mt-0">
-            <ul className="flex flex-col lg:flex-row gap-10 lg:gap-3">
+            <ul className="flex flex-col lg:flex-row gap-12 lg:gap-5">
               {navLinks.map((link, idx) => {
                 return (
                   <li key={idx}>
@@ -83,12 +85,12 @@ export default function Header() {
             </ul>
           </nav>
           <div className="border-2 border-theme-pink border-dotted lg:border-0 p-3 lg:p-0 hover:scale-110 transition">
-            <Link
+            <a
               href="tel:+421000000000"
               className="font-bold text-theme-pink text-stroke"
             >
               +421 000 000 000
-            </Link>
+            </a>
           </div>
         </div>
         <button
