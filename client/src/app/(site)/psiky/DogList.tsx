@@ -59,7 +59,7 @@ export default function DogList({ users }: any) {
 
       <button
         onClick={handleDogsShown}
-        className="max-w-fit mx-auto my-8 px-5 py-2 rounded-3xl border-2 text-theme-pink border-theme-pink hover:bg-theme-pink hover:text-theme-light"
+        className="z-50 max-w-fit mx-auto mt-8 mb-12 px-5 py-2 rounded-3xl border-2 text-theme-pink border-theme-pink hover:bg-theme-pink hover:text-theme-light"
       >
         {next < users.length ? "Ukáž viac" : "Ukáž menej"}
       </button>

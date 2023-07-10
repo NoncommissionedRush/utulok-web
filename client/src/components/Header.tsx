@@ -34,7 +34,7 @@ export default function Header() {
     "h-1 w-6 my-0.5 rounded-full bg-black transition ease transform duration-300";
 
   return (
-    <header className="fixed top-0 w-full bg-theme-yellow z-50">
+    <header className="fixed top-0 w-full bg-theme-yellow z-[9999]">
       <div className="container flex justify-between py-3">
         <div className="text-theme-pink font-bold">
           <Link href={"/"}>
