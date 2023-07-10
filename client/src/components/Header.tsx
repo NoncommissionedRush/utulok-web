@@ -9,7 +9,7 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const currentRoute = usePathname();
 
-  // Disable scroll when mobile nav is open
+  // Disable scroll when mobile nav is open - horizontal mobile view -> cut by overflow hidden ❗❗...flex wrap added to nav
   useEffect(() => {
     isOpen
       ? (document.body.style.overflowY = "hidden")
@@ -25,10 +25,10 @@ export default function Header() {
   ];
 
   const navStyles =
-    "w-full h-screen bg-theme-yellow border-t border-black lg:border-t-0 lg:h-auto flex flex-col lg:flex-row items-center text-center gap-10 lg:gap-0 lg:justify-between p-3 lg:p-0 absolute lg:relative top-full left-0 transform lg:translate-x-0 transition-transform duration-500 lg:transition-none";
+    "w-full h-screen overflow-y-auto xl:overflow-y-visible bg-theme-yellow border-t border-black xl:border-t-0 xl:h-auto flex flex-col flex-wrap xl:flex-row items-center xl:justify-between text-center gap-10 xl:gap-0  p-3 xl:p-0 absolute xl:relative top-full left-0 transform xl:translate-x-0 transition-transform duration-500 xl:transition-none";
 
   const linkStyles =
-    "px-5 py-1 rounded-3xl border-2 border-theme-pink hover:bg-theme-pink hover:text-theme-light hover:shadow-none";
+    "block w-36 px-5 py-1 rounded-3xl border-2 border-theme-pink hover:bg-theme-pink hover:text-theme-light hover:shadow-none";
 
   const hamburgerLineStyles =
     "h-1 w-6 my-0.5 rounded-full bg-black transition ease transform duration-300";
@@ -54,8 +54,8 @@ export default function Header() {
             isOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
-          <nav className="mx-auto mt-5 lg:mt-0">
-            <ul className="flex flex-col lg:flex-row gap-12 lg:gap-5">
+          <nav className="mx-auto mt-5 xl:mt-0">
+            <ul className="flex flex-col xl:flex-row gap-12 xl:gap-5">
               {navLinks.map((link, idx) => {
                 return (
                   <li key={idx}>
@@ -84,7 +84,7 @@ export default function Header() {
               })}
             </ul>
           </nav>
-          <div className="border-2 border-theme-pink border-dotted lg:border-0 p-3 lg:p-0 hover:scale-110 transition">
+          <div className="border-2 border-theme-pink border-dotted xl:border-0 p-3 xl:p-0 hover:scale-110 transition">
             <a
               href="tel:+421000000000"
               className="font-bold text-theme-pink text-stroke"
@@ -94,7 +94,7 @@ export default function Header() {
           </div>
         </div>
         <button
-          className="lg:hidden flex flex-col justify-center items-center group"
+          className="xl:hidden flex flex-col justify-center items-center group"
           onClick={() => setIsOpen(!isOpen)}
         >
           <div

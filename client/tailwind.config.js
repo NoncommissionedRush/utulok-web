@@ -11,21 +11,22 @@ module.exports = {
       center: true,
     },
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-      },
       colors: {
         "theme-light": "#FFFEF5",
+        "theme-dark": "#1E1E1E",
         "theme-yellow": "#FEDE3C",
         "theme-pink": "#E4647B",
+        "theme-pink-light": "#FF92A5",
         "theme-green": "#64BAC3",
       },
       gridTemplateColumns: {
         "dog-grid": "repeat(auto-fill, 250px)",
       },
     },
+    fontFamily: {
+      roboto: ["var(--font-roboto)"],
+      titan: ["var(--font-titan)"],
+    },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
 };

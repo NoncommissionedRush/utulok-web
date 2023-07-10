@@ -62,7 +62,7 @@ export default function ContactForm() {
   return (
     <form
       onSubmit={submitForm}
-      className="md:w-4/5 bg-theme-light text-theme-pink border-2 border-theme-pink rounded-2xl px-8 pt-6 pb-8 shadow-[3px_4px_0px_2px_#000]"
+      className="lg:w-11/12 bg-theme-light text-theme-pink border-2 border-theme-pink rounded-2xl m-auto px-8 pt-6 pb-8 shadow-[3px_4px_0px_2px_#000]"
     >
       <div className="mb-4">
         <label className="block text-theme-pink text-small mb-2" htmlFor="name">
@@ -139,8 +139,6 @@ export default function ContactForm() {
       <div className="flex justify-between items-center">
         <button
           className="w-28 px-5 py-1 bg-theme-pink text-theme-light rounded-3xl border-2 border-theme-pink hover:bg-theme-light hover:text-theme-pink"
-          name="message"
-          id="message"
           type="submit"
           disabled={isSending}
         >

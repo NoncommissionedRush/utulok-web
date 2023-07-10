@@ -6,13 +6,15 @@ export default function Contact() {
   return (
     <section className="min-h-screen w-full scroll-mt-14">
       <div className="container flex flex-col">
-        <h1 className="my-3 text-2xl font-bold">Kontakt</h1>
+        <h1 className="my-5 text-3xl font-titan text-stroke-bold-yellow text-theme-pink">
+          Kontaktujte nás
+        </h1>
 
-        <div className="flex flex-col md:flex-row items-center my-14">
-          <div className="md:w-1/2">
+        <div className="flex flex-col lg:flex-row items-center my-14">
+          <div className="lg:w-1/2">
             <ContactForm />
           </div>
-          <div className="mt-14 md:mt-0 mx-auto">
+          <div className="mt-14 lg:mt-0 mx-auto">
             <a href="https://www.google.com/maps/@48.1961669,17.0764262,14z?entry=ttu">
               <Image
                 src={"/map.png"}

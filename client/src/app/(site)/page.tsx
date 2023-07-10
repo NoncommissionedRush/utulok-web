@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     <>
-      <section className="relative min-h-screen w-full scroll-mt-14">
+      <section className="relative min-h-[90vh] w-full scroll-mt-14">
         <div className="absolute inset-0 -z-20 before:absolute before:z-10 before:inset-0 before:bg-[rgba(255,255,255,0.3)]">
           <Image
             src={"/dogs.png"}
@@ -18,9 +18,9 @@ export default function Home() {
             blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg=="
           />
         </div>
-        <div className="container flex flex-col min-h-screen">
-          {/* <h1 className="my-3 text-2xl font-bold">Domov</h1> */}
-          <div className="flex flex-col flex-1 items-center mt-14">
+        <div className="container flex flex-col">
+          {/* <h1 className="my-5 text-2xl font-bold">Domov</h1> */}
+          <div className="flex flex-col items-center my-14">
             <Image
               src="/utulok-logo.png"
               alt="logo"
@@ -29,7 +29,7 @@ export default function Home() {
               priority
               className="rounded-full"
             />
-            <h1 className="my-14 text-3xl md:text-4xl text-center text-theme-pink font-bold text-stroke">
+            <h1 className="my-14 text-3xl md:text-4xl font-titan text-center text-theme-pink font-bold text-stroke">
               Zachraňujeme psíky od roku 1492.
             </h1>
             <Link
@@ -55,9 +55,11 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="relative min-h-screen w-full scroll-mt-14 bg-theme-pink">
+      <section className="relative min-h-screen w-full scroll-mt-14 bg-theme-pink-light">
         <div className="container flex flex-col min-h-screen">
-          <h1 className="my-3 text-2xl font-bold">Naše psíky</h1>
+          <h1 className="my-5 text-3xl font-titan text-stroke-bold-yellow text-theme-pink">
+            Naše psíky
+          </h1>
         </div>
         <div className="custom-shape-divider-bottom-1688744883">
           <svg
@@ -76,7 +78,7 @@ export default function Home() {
 
       <section className="relative min-h-screen w-full scroll-mt-14">
         <div className="container flex flex-col">
-          <h1 className="my-3 text-2xl font-bold">
+          <h1 className="my-5 text-3xl font-titan text-stroke-bold-yellow text-theme-pink">
             Aktuálne potrebujeme vašu pomoc
           </h1>
         </div>
@@ -96,7 +98,7 @@ export default function Home() {
       </section>
       <section className="min-h-screen w-full scroll-mt-14 bg-theme-green">
         <div className="container flex flex-col">
-          <h1 className="my-3 text-2xl font-bold">
+          <h1 className="my-5 text-3xl font-titan text-stroke-bold-yellow text-theme-pink">
             Sledujte nás na Instagrame
           </h1>
         </div>

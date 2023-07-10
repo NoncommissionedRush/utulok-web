@@ -1,7 +1,7 @@
-import "./globals.css";
-import Header from "../components/Header";
+import "../globals.css";
+import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Roboto } from "next/font/google";
+import { Roboto, Titan_One } from "next/font/google";
 
 export const metadata = {
   title: "Útulok Web",
@@ -12,6 +12,14 @@ const roboto = Roboto({
   weight: ["500", "900"],
   subsets: ["latin"],
   display: "swap",
+  variable: "--font-roboto",
+});
+
+const titan = Titan_One({
+  weight: "400",
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-titan",
 });
 
 export default function RootLayout({
@@ -20,8 +28,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="sk" className={roboto.className}>
-      <body className="bg-theme-light pt-14 overflow-x-hidden">
+    <html lang="sk" className={`${roboto.variable} ${titan.variable}`}>
+      <body className="bg-theme-light pt-14 font-roboto overflow-x-hidden">
         <Header />
         <main className="flex min-h-screen flex-col">{children}</main>
         <Footer />

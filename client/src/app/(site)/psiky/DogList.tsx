@@ -48,7 +48,7 @@ export default function DogList({ users }: any) {
                   placeholder="blur"
                   blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg=="
                 />
-                <h2 className="w-full absolute -bottom-10 text-4xl font-bold text-stroke-bold border-8 border-theme-yellow rounded-2xl bg-theme-pink">
+                <h2 className="w-full absolute -bottom-10 text-4xl font-titan text-stroke-bold-transparent border-8 border-theme-yellow rounded-2xl bg-theme-pink">
                   {user.firstName}
                 </h2>
               </Link>

@@ -2,22 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
+::selection {
+  color: #1e1e1e;
+  background-color: #fffef5;
+}
+
 html {
   scroll-behavior: smooth !important;
 }
 
-.text-stroke {
-  -webkit-text-stroke: 0.6px white;
+/* Text stroke */
+
+@supports (-webkit-text-stroke: 0.6px #fffef5) {
+  .text-stroke {
+    -webkit-text-stroke: 0.6px #fffef5;
+  }
 }
 
-.text-stroke-bold {
-  -webkit-text-stroke: 1px white;
-  -webkit-text-fill-color: transparent;
+@supports (-webkit-text-stroke: 1px #fffef5) {
+  .text-stroke-bold {
+    -webkit-text-stroke: 1px #fffef5;
+  }
+
+  .text-stroke-bold-transparent {
+    -webkit-text-stroke: 1px #fffef5;
+    -webkit-text-fill-color: transparent;
+  }
 }
-.wave-container {
-  height: 40vh;
-  background-color: #20b2aa;
-  position: relative;
+
+@supports (-webkit-text-stroke: 1px #fede3c) {
+  .text-stroke-bold-yellow {
+    -webkit-text-stroke: 2px #fede3c;
+  }
 }
 
 /* Wave divider 1 */
@@ -39,7 +55,7 @@ html {
 }
 
 .custom-shape-divider-bottom-1688744264 .shape-fill {
-  fill: #e4647b;
+  fill: #ff92a5;
 }
 
 /* Wave divider 2 */
