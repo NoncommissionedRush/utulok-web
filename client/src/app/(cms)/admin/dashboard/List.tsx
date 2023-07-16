@@ -1,6 +1,11 @@
 "use client";
 
-export default function List({ users, setFormData, setIsEditing }: any) {
+export default function List({
+  users,
+  setFormData,
+  setIsEditing,
+  openModalForm,
+}: any) {
   const handleEdit = (user: any) => {
     setIsEditing(true);
     setFormData({
@@ -37,7 +42,10 @@ export default function List({ users, setFormData, setIsEditing }: any) {
               <td>{user.email}</td>
               <td className="flex gap-2">
                 <button
-                  onClick={() => handleEdit(user)}
+                  onClick={() => {
+                    openModalForm();
+                    handleEdit(user);
+                  }}
                   className="btn btn-info btn-xs"
                 >
                   Edit

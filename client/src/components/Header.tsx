@@ -9,7 +9,7 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const currentRoute = usePathname();
 
-  // Disable scroll when mobile nav is open - horizontal mobile view -> cut by overflow hidden ❗❗...flex wrap added to nav
+  // Disable scroll when mobile nav is open
   useEffect(() => {
     isOpen
       ? (document.body.style.overflowY = "hidden")
@@ -25,7 +25,7 @@ export default function Header() {
   ];
 
   const navStyles =
-    "w-full h-screen overflow-y-auto xl:overflow-y-visible bg-theme-yellow border-t border-black xl:border-t-0 xl:h-auto flex flex-col flex-wrap xl:flex-row items-center xl:justify-between text-center gap-10 xl:gap-0  p-3 xl:p-0 absolute xl:relative top-full left-0 transform xl:translate-x-0 transition-transform duration-500 xl:transition-none";
+    "absolute xl:relative w-full top-full left-0 flex flex-col xl:flex-row items-center xl:justify-between gap-10 h-[calc(100vh-3rem)] xl:h-auto text-center xl:gap-0 p-3 xl:p-0 w-full overflow-y-auto xl:overflow-y-visible bg-theme-yellow border-t border-black xl:border-none transform xl:translate-x-0 transition-transform duration-500 xl:transition-none";
 
   const linkStyles =
     "block w-36 px-5 py-1 rounded-3xl border-2 border-theme-pink hover:bg-theme-pink hover:text-theme-light hover:shadow-none";
@@ -84,7 +84,7 @@ export default function Header() {
               })}
             </ul>
           </nav>
-          <div className="border-2 border-theme-pink border-dotted xl:border-0 p-3 xl:p-0 hover:scale-110 transition">
+          <div className="border-2 border-theme-pink border-dotted xl:border-0 p-3 xl:p-0 mb-5 xl:mb-0 hover:scale-110 transition">
             <a
               href="tel:+421000000000"
               className="font-bold text-theme-pink text-stroke"

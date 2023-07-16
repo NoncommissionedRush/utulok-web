@@ -14,6 +14,12 @@ export default function Dash({ users }: any) {
   });
   const [isEditing, setIsEditing] = useState(false);
 
+  const openModalForm = () => {
+    if (document) {
+      (document.getElementById("my_modal_1") as HTMLFormElement).showModal();
+    }
+  };
+
   return (
     <>
       <Form
@@ -21,11 +27,13 @@ export default function Dash({ users }: any) {
         setFormData={setFormData}
         isEditing={isEditing}
         setIsEditing={setIsEditing}
+        openModalForm={openModalForm}
       />
       <List
         users={users}
         setFormData={setFormData}
         setIsEditing={setIsEditing}
+        openModalForm={openModalForm}
       />
     </>
   );

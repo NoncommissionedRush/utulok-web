@@ -10,7 +10,7 @@ export default function Contact() {
           Kontaktujte nás
         </h1>
 
-        <div className="flex flex-col lg:flex-row items-center my-14">
+        <div className="flex flex-col lg:flex-row items-center my-24">
           <div className="lg:w-1/2">
             <ContactForm />
           </div>

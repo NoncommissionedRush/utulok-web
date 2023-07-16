@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import DogSampleList from "@/components/DogSampleList";
 
 //bg-[url('/dogs.png')] bg-cover bg-center bg-no-repeat
 
@@ -19,7 +20,6 @@ export default function Home() {
           />
         </div>
         <div className="container flex flex-col">
-          {/* <h1 className="my-5 text-2xl font-bold">Domov</h1> */}
           <div className="flex flex-col items-center my-14">
             <Image
               src="/utulok-logo.png"
@@ -60,6 +60,9 @@ export default function Home() {
           <h1 className="my-5 text-3xl font-titan text-stroke-bold-yellow text-theme-pink">
             Naše psíky
           </h1>
+
+          {/* @ts-expect-error Server Component */}
+          <DogSampleList />
         </div>
         <div className="custom-shape-divider-bottom-1688744883">
           <svg
