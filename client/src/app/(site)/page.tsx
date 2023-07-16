@@ -60,8 +60,6 @@ export default function Home() {
           <h1 className="my-5 text-3xl font-titan text-stroke-bold-yellow text-theme-pink">
             Naše psíky
           </h1>
-
-          {/* @ts-expect-error Server Component */}
           <DogSampleList />
         </div>
         <div className="custom-shape-divider-bottom-1688744883">
