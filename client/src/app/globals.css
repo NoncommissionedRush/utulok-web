@@ -128,3 +128,31 @@ html {
 .custom-shape-divider-bottom-footer .shape-fill {
   fill: #fede3c;
 }
+
+/* Carousel controls */
+/* .swiper-button-prev,
+.swiper-button-next {
+}
+.swiper-button-prev:after {
+  content: "<";
+  position: absolute;
+  top: 50%;
+  bottom: 50%;
+  left: 0;
+}
+
+.swiper-button-next:after {
+  content: ">";
+  position: absolute;
+  top: 50%;
+  bottom: 50%;
+  right: 0;
+} */
+
+/* .swiper-button-prev:hover,
+.swiper-button-prev:active,
+.swiper-button-next:hover,
+.swiper-button-next:active {
+  background: slategrey;
+  opacity: 0.5;
+} */

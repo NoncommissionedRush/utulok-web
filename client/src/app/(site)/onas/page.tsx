@@ -1,7 +1,7 @@
 export default function About() {
   return (
     <section className="relative min-h-screen w-full scroll-mt-14">
-      <div className="container flex flex-col">
+      <div className="container flex flex-col mb-20">
         <h1 className="my-5 text-3xl font-titan text-stroke-bold-yellow text-theme-pink">
           O nás
         </h1>

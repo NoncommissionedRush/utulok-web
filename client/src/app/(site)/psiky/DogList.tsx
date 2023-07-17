@@ -17,9 +17,9 @@ export default function DogList({ users }: any) {
   useLayoutEffect(() => {
     if (sessionStorage.getItem("page")) {
       setNext(parseInt(sessionStorage.getItem("page") as string));
-    } else {
-      sessionStorage.setItem("page", next.toString());
-    }
+    } // else {
+    //   sessionStorage.setItem("page", next.toString());
+    // }
   }, []);
 
   useEffect(() => {

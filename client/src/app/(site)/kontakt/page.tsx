@@ -5,12 +5,12 @@ import { MdOutlinePlace } from "react-icons/md";
 export default function Contact() {
   return (
     <section className="relative min-h-screen w-full scroll-mt-14">
-      <div className="container flex flex-col">
+      <div className="container flex flex-col mb-20">
         <h1 className="my-5 text-3xl font-titan text-stroke-bold-yellow text-theme-pink">
           Kontaktujte nás
         </h1>
 
-        <div className="flex flex-col lg:flex-row items-center my-24">
+        <div className="flex flex-col lg:flex-row items-center my-10">
           <div className="lg:w-1/2">
             <ContactForm />
           </div>

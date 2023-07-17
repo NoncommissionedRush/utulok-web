@@ -18,13 +18,13 @@ export default async function DogSampleList() {
   const users = await getSampleDogs();
 
   return (
-    <div className="flex flex-col justify-center items-center my-10">
+    <div className="flex flex-col justify-center items-center">
       <Carousel users={users} />
       <Link
         href={"/psiky"}
         className="max-w-fit my-5 px-4 py-2 rounded-3xl text-theme-light border-2 border-theme-light hover:bg-theme-light hover:text-theme-pink"
       >
-        Zobraziť všestky psíky
+        Zobraziť všetky psíky
       </Link>
     </div>
   );

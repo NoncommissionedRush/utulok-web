@@ -18,7 +18,7 @@ export default async function DogsPage({ params }: any) {
   const user = await getDog(params.id);
   return (
     <section className="min-h-screen w-full scroll-mt-14">
-      <div className="container flex flex-col">
+      <div className="container flex flex-col mb-20">
         <BackBtn />
         <h1 className="mx-auto">psiky/{user.id}</h1>
         <div className="flex flex-col p-2 w-max mx-auto border-4 border-theme-yellow border-dotted rounded-xl text-center">
