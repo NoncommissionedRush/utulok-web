@@ -17,9 +17,9 @@ export default function DogList({ users }: any) {
   useLayoutEffect(() => {
     if (sessionStorage.getItem("page")) {
       setNext(parseInt(sessionStorage.getItem("page") as string));
-    } // else {
-    //   sessionStorage.setItem("page", next.toString());
-    // }
+    } else {
+      sessionStorage.setItem("page", next.toString());
+    }
   }, []);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ export default function DogList({ users }: any) {
 
   return (
     <>
-      <div className="grid grid-cols-dog-grid gap-4 my-10 justify-center text-center">
+      <div className="grid grid-cols-fit-grid gap-4 my-10 justify-center text-center">
         {users?.slice(0, next).map((user: any) => {
           return (
             <div

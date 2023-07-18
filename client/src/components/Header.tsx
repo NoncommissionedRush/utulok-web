@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { FaFacebook } from "react-icons/fa";
+import { BsInstagram } from "react-icons/bs";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -55,7 +57,7 @@ export default function Header() {
           }`}
         >
           <nav className="mx-auto mt-5 xl:mt-0">
-            <ul className="flex flex-col xl:flex-row gap-12 xl:gap-5">
+            <ul className="flex flex-col xl:flex-row gap-8 xl:gap-5">
               {navLinks.map((link, idx) => {
                 return (
                   <li key={idx}>
@@ -84,12 +86,22 @@ export default function Header() {
               })}
             </ul>
           </nav>
-          <div className="border-2 border-theme-pink border-dotted xl:border-0 p-3 xl:p-0 mb-5 xl:mb-0 hover:scale-110 transition">
+          <div className="border-2 border-theme-pink border-dotted xl:border-0 p-2 xl:p-0 hover:scale-110 transition">
             <a
               href="tel:+421000000000"
               className="font-bold text-theme-pink text-stroke"
             >
               +421 000 000 000
+            </a>
+          </div>
+          <div className="flex gap-5 mb-8 text-2xl xl:hidden">
+            <a href="#" rel="noopener" className="hover:text-theme-light">
+              {" "}
+              <FaFacebook />
+            </a>
+            <a href="#" rel="noopener" className="hover:text-theme-light">
+              {" "}
+              <BsInstagram />
             </a>
           </div>
         </div>

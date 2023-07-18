@@ -1,5 +1,3 @@
-// JUST BACKUP 👽👽👽
-
 "use client";
 
 import { Navigation } from "swiper/modules";

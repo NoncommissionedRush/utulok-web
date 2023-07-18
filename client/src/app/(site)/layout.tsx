@@ -29,9 +29,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="sk" className={`${roboto.variable} ${titan.variable}`}>
-      <body className="bg-theme-light pt-14 font-roboto overflow-x-hidden">
+      <body className="flex flex-col bg-theme-light pt-14 font-roboto min-h-screen overflow-x-hidden">
         <Header />
-        <main className="flex min-h-screen flex-col">{children}</main>
+        <main className="flex flex-col min-h-screen">{children}</main>
         <Footer />
       </body>
     </html>

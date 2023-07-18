@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function About() {
   return (
     <section className="relative min-h-screen w-full scroll-mt-14">
@@ -5,6 +7,65 @@ export default function About() {
         <h1 className="my-5 text-3xl font-titan text-stroke-bold-yellow text-theme-pink">
           O nás
         </h1>
+        <div className="my-5 max-w-4xl mx-auto text-theme-pink">
+          <p className="mb-5">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum
+            maxime eveniet quo dolores voluptatum quibusdam, aperiam blanditiis
+            esse numquam fugit atque quam? Maiores commodi consequuntur nostrum.
+            Iure sapiente amet commodi accusamus, voluptas perferendis autem
+            illum fugit at excepturi a, eos libero in, delectus nostrum non
+            veniam? Saepe eius beatae iusto!
+          </p>
+          <p className="mb-5">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas dolore
+            quaerat perferendis optio nulla deleniti obcaecati velit beatae a
+            pariatur, minima qui deserunt fugiat cumque cupiditate
+            exercitationem sapiente voluptas ea! Provident dicta natus
+            consequuntur. Modi harum natus, voluptas adipisci laboriosam
+            nesciunt, distinctio suscipit in excepturi pariatur, neque
+            consequuntur reprehenderit iusto!
+          </p>
+          <Image
+            src="/utulok-logo.png"
+            alt="logo"
+            width={"175"}
+            height={"175"}
+            priority
+            className="rounded-full mx-auto my-14"
+          />
+          <div className="flex gap-10 my-10 justify-center text-center">
+            <div>
+              <Image
+                src="/team/one.png"
+                alt="member one"
+                width={"75"}
+                height={"75"}
+                className="rounded-full mx-auto mb-2"
+              />
+              <p>Mária Ďuríčková</p>
+            </div>
+            <div>
+              <Image
+                src="/team/two.png"
+                alt="member two"
+                width={"75"}
+                height={"75"}
+                className="rounded-full mx-auto mb-2"
+              />
+              <p>Klára Jarunková</p>
+            </div>
+            <div>
+              <Image
+                src="/team/three.png"
+                alt="member three"
+                width={"75"}
+                height={"75"}
+                className="rounded-full mx-auto mb-2"
+              />
+              <p>Ľudmila Podjavorinská</p>
+            </div>
+          </div>
+        </div>
       </div>
       <div className="custom-shape-divider-bottom-footer">
         <svg

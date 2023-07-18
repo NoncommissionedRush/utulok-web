@@ -20,7 +20,7 @@ export default function Home() {
             blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg=="
           />
         </div>
-        <div className="container flex flex-col">
+        <div className="container flex flex-col mb-20">
           <div className="flex flex-col items-center my-14">
             <Image
               src="/utulok-logo.png"
@@ -33,12 +33,32 @@ export default function Home() {
             <h1 className="my-14 text-3xl md:text-4xl font-titan text-center text-theme-pink font-bold text-stroke">
               Zachraňujeme psíky od roku 1492.
             </h1>
-            <Link
-              href={"/pomoc"}
-              className=" max-w-fit my-12 px-8 py-2 rounded-3xl bg-theme-yellow font-bold text-xl text-stroke text-theme-pink shadow-[3px_4px_0px_2px_#000] hover:bg-theme-light"
-            >
-              Pomôcť
-            </Link>
+            <div className="relative group">
+              <Link
+                href={"/pomoc"}
+                className="block max-w-fit px-8 py-2 rounded-3xl bg-theme-yellow font-bold text-xl text-stroke text-theme-pink shadow-[3px_4px_0px_2px_#000] hover:bg-theme-light"
+              >
+                Pomôcť
+              </Link>
+              <span className="absolute top-0 left-0 group-hover:animate-spin">
+                ⭐
+              </span>
+              <span className="absolute -top-3 left-10 group-hover:animate-pulse">
+                💗
+              </span>
+              <span className="absolute bottom-0 right-0 group-hover:animate-spin">
+                ⭐
+              </span>
+              <span className="absolute top-0 right-0 group-hover:animate-pulse">
+                💗
+              </span>
+              <span className="absolute -bottom-3 right-12 group-hover:animate-spin">
+                ⭐
+              </span>
+              <span className="absolute top-8 left-0 group-hover:animate-pulse">
+                💗
+              </span>
+            </div>
           </div>
         </div>
         <div className="custom-shape-divider-bottom-1688744264">
@@ -80,19 +100,19 @@ export default function Home() {
         </div>
       </section>
       {/* Second section */}
-      <section className="relative min-h-screen w-full scroll-mt-14">
+      <section className="relative w-full scroll-mt-14">
         <div className="container flex flex-col mb-20">
           <h1 className="my-5 text-3xl font-titan text-stroke-bold-yellow text-theme-pink">
             Aktuálne potrebujeme vašu pomoc
           </h1>
           <div className="my-5 max-w-4xl mx-auto text-theme-pink">
-            <p className="my-5">
+            <p className="mb-5">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Non ipsum
               omnis harum, odio aperiam doloremque sed, ab, eius nisi facere
               minus tempora fugit vero itaque accusantium exercitationem
               delectus aliquid veritatis.
             </p>
-            <div className="flex gap-5 justify-center">
+            <div className="flex gap-5 justify-center mb-5">
               <Image
                 src={"/pes1.png"}
                 alt="psik jeden"
@@ -118,7 +138,7 @@ export default function Home() {
                 blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg=="
               />
             </div>
-            <p className="my-5">
+            <p className="mb-5">
               Lorem ipsum dolor sit amet consectetur, adipisicing elit.
               Consequuntur nulla, necessitatibus quidem molestiae repellat eos
               dolor sunt ex animi, praesentium blanditiis voluptates debitis.
@@ -128,14 +148,14 @@ export default function Home() {
               Voluptas.
             </p>
             <a
-              href="https://www.preutulky.sk/6/"
+              href="https://www.preutulky.sk/"
               target="_blank"
               rel="noopener"
               className="block max-w-fit px-4 py-2 mx-auto my-10 rounded-3xl text-theme-pink border-2 border-theme-pink hover:bg-theme-pink hover:text-theme-light"
             >
               Zapojte sa do aktuálnej výzvy
             </a>
-            <p className="my-5">
+            <p className="mb-5">
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
             </p>
           </div>
@@ -160,7 +180,7 @@ export default function Home() {
           <h1 className="my-5 text-3xl font-titan text-stroke-bold-yellow text-theme-pink">
             Sledujte nás na Instagrame
           </h1>
-          <div className="grid grid-cols-dog-grid gap-10 my-5 justify-center place-items-center text-center">
+          <div className="grid grid-cols-fit-grid gap-10 my-5 justify-center place-items-center text-center">
             <div className="relative saturate-50 border-8 border-theme-light rounded-3xl">
               <a
                 href="https://www.instagram.com/"

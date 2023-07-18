@@ -20,7 +20,8 @@ module.exports = {
         "theme-green": "#64BAC3",
       },
       gridTemplateColumns: {
-        "dog-grid": "repeat(auto-fill, 250px)",
+        //"dog-grid": "repeat(auto-fill, 250px)",
+        "fit-grid": "repeat(auto-fit, 250px)",
       },
     },
     fontFamily: {
