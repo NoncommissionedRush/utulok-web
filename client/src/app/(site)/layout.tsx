@@ -31,7 +31,7 @@ export default function RootLayout({
     <html lang="sk" className={`${roboto.variable} ${titan.variable}`}>
       <body className="flex flex-col bg-theme-light pt-14 font-roboto min-h-screen overflow-x-hidden">
         <Header />
-        <main className="flex flex-col min-h-screen">{children}</main>
+        <main className="flex flex-col">{children}</main>
         <Footer />
       </body>
     </html>

@@ -14,7 +14,7 @@ export default function Error({
   }, [error]);
 
   return (
-    <div className="container mt-10">
+    <section className="container min-h-screen mt-10">
       <h2 className="my-3 text-xl text-theme-pink">Something went wrong!</h2>
       <button
         className="relative my-5 px-4 py-2 rounded-3xl text-theme-pink border-2 border-theme-pink hover:bg-theme-pink hover:text-theme-light "
@@ -22,6 +22,6 @@ export default function Error({
       >
         Try again
       </button>
-    </div>
+    </section>
   );
 }

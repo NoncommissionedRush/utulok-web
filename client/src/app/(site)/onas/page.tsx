@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function About() {
   return (
-    <section className="relative min-h-screen w-full scroll-mt-14">
+    <section className="relative w-full scroll-mt-14">
       <div className="container flex flex-col mb-20">
         <h1 className="my-5 text-3xl font-titan text-stroke-bold-yellow text-theme-pink">
           O nás
@@ -33,7 +33,7 @@ export default function About() {
             priority
             className="rounded-full mx-auto my-14"
           />
-          <div className="flex gap-10 my-10 justify-center text-center">
+          <div className="flex gap-5 lg:gap-10 my-10 justify-center text-center">
             <div>
               <Image
                 src="/team/one.png"
