@@ -1,3 +1,4 @@
+import DogFilter from "./DogFilter";
 import DogList from "./DogList";
 
 async function getDogs() {
@@ -22,9 +23,7 @@ export default async function Dogs() {
         <h1 className="my-5 text-3xl font-titan text-stroke-bold-yellow text-theme-pink">
           Naše psíky
         </h1>
-        <button className="max-w-fit my-5 px-4 py-2 rounded-3xl text-theme-pink border-2 border-theme-pink hover:bg-theme-pink hover:text-theme-light">
-          Filter &gt;&gt;&gt;
-        </button>
+        <DogFilter />
         <DogList users={users} />
       </div>
       <div className="custom-shape-divider-bottom-footer">
