@@ -40,13 +40,13 @@ export default function Home() {
               >
                 Pomôcť
               </Link>
-              <span className="absolute top-0 left-0 group-hover:animate-spin">
+              <span className="absolute top-0 -left-1 group-hover:animate-spin">
                 ⭐
               </span>
               <span className="absolute -top-3 left-10 group-hover:animate-pulse">
                 💗
               </span>
-              <span className="absolute bottom-0 right-0 group-hover:animate-spin">
+              <span className="absolute bottom-0 -right-2 group-hover:animate-spin">
                 ⭐
               </span>
               <span className="absolute top-0 right-0 group-hover:animate-pulse">

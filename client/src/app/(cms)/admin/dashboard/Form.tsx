@@ -1,11 +1,14 @@
 "use client";
 
+import { AiFillCloseCircle } from "react-icons/ai";
+
 export default function Form({
   formData,
   setFormData,
   isEditing,
   setIsEditing,
-  openModalForm,
+  isFormShown,
+  setIsFormShown,
 }: any) {
   const handleInput = (e: any) => {
     //console.log(e.target.name);
@@ -39,22 +42,20 @@ export default function Form({
 
   return (
     <>
-      <button className="btn btn-md" onClick={openModalForm}>
-        Create dog
-      </button>
-      <dialog id="my_modal_1" className="modal modal-box m-auto">
-        <form method="dialog">
-          <div className="modal-action">
-            {/* if there is a button in form, it will close the modal */}
-            <button
-              onClick={() => resetForm()}
-              className="absolute top-5 right-5"
-            >
-              ❌
-            </button>
+      {isFormShown && (
+        <form className="max-w-2xl border-2 border-black px-8 pt-6 pb-8 my-10 shadow-[3px_4px_0px_2px_#000]">
+          <div className="flex justify-between items-center">
+            <h2 className="font-bold text-xl mb-3">
+              {isEditing ? "Uprav psíka" : "Vytvor psíka"}
+            </h2>
+            <AiFillCloseCircle
+              className="cursor-pointer text-2xl text-red-400"
+              onClick={() => {
+                setIsFormShown(false);
+                resetForm();
+              }}
+            />
           </div>
-        </form>
-        <form className="w-full border-2 border-black px-8 pt-6 pb-8 shadow-[3px_4px_0px_2px_#000]">
           <div className="mb-4">
             <label className="block text-small mb-2" htmlFor="name">
               Meno
@@ -127,7 +128,7 @@ export default function Form({
             )}
           </div>
         </form>
-      </dialog>
+      )}
     </>
   );
 }

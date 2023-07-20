@@ -138,7 +138,7 @@ export default function ContactForm() {
 
       <div className="flex justify-between items-center">
         <button
-          className="w-28 px-5 py-1 bg-theme-pink text-theme-light rounded-3xl border-2 border-theme-pink hover:bg-theme-light hover:text-theme-pink"
+          className="w-28 px-5 py-1 bg-theme-light text-theme-pink rounded-3xl border-2 border-theme-pink hover:bg-theme-pink hover:text-theme-light"
           type="submit"
           disabled={isSending}
         >

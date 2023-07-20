@@ -13,27 +13,33 @@ export default function Dash({ users }: any) {
     email: "",
   });
   const [isEditing, setIsEditing] = useState(false);
-
-  const openModalForm = () => {
-    if (document) {
-      (document.getElementById("my_modal_1") as HTMLFormElement).showModal();
-    }
-  };
+  const [isFormShown, setIsFormShown] = useState(false);
 
   return (
     <>
+      {!isFormShown && (
+        <button
+          className="px-4 py-2 text-white bg-emerald-500 rounded-md hover:bg-emerald-600 focus:outline-none"
+          onClick={() => setIsFormShown(true)}
+        >
+          Create dog
+        </button>
+      )}
+
       <Form
         formData={formData}
         setFormData={setFormData}
         isEditing={isEditing}
         setIsEditing={setIsEditing}
-        openModalForm={openModalForm}
+        isFormShown={isFormShown}
+        setIsFormShown={setIsFormShown}
       />
       <List
         users={users}
         setFormData={setFormData}
         setIsEditing={setIsEditing}
-        openModalForm={openModalForm}
+        isFormShown={isFormShown}
+        setIsFormShown={setIsFormShown}
       />
     </>
   );

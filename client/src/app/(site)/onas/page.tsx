@@ -33,14 +33,14 @@ export default function About() {
             priority
             className="rounded-full mx-auto my-14"
           />
-          <div className="flex gap-5 lg:gap-10 my-10 justify-center text-center">
+          <div className="flex flex-col sm:flex-row gap-5 md:gap-10 my-10 justify-center text-center">
             <div>
               <Image
                 src="/team/one.png"
                 alt="member one"
                 width={"75"}
                 height={"75"}
-                className="rounded-full mx-auto mb-2"
+                className="rounded-full mx-auto mb-2 md:w-24 md:h-24"
               />
               <p>Mária Ďuríčková</p>
             </div>
@@ -50,7 +50,7 @@ export default function About() {
                 alt="member two"
                 width={"75"}
                 height={"75"}
-                className="rounded-full mx-auto mb-2"
+                className="rounded-full mx-auto mb-2 md:w-24 md:h-24"
               />
               <p>Klára Jarunková</p>
             </div>
@@ -60,7 +60,7 @@ export default function About() {
                 alt="member three"
                 width={"75"}
                 height={"75"}
-                className="rounded-full mx-auto mb-2"
+                className="rounded-full mx-auto mb-2 md:w-24 md:h-24"
               />
               <p>Ľudmila Podjavorinská</p>
             </div>

@@ -2,158 +2,73 @@
 
 import { useState } from "react";
 import { AiFillCloseCircle } from "react-icons/ai";
+import Checkbox from "@/components/Checkbox";
+import { filterOptions } from "@/lib/filterOptions";
 
 export default function DogFilter() {
   const [isExpanded, setIsExpanded] = useState(false);
 
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    category: string
+  ) => {
+    console.log(category + ": " + e.target.value);
+  };
+
   return (
     <div>
-      <button
-        onClick={() => setIsExpanded(true)}
+      <div
+        onClick={() => !isExpanded && setIsExpanded(true)}
         className={`${
-          isExpanded ? "hidden" : "block"
-        } max-w-fit my-5 px-4 py-2 rounded-3xl text-theme-pink border-2 border-theme-pink hover:bg-theme-pink hover:text-theme-light`}
+          !isExpanded
+            ? "cursor-pointer max-w-fit px-4 py-2 hover:bg-theme-pink hover:text-theme-light"
+            : ""
+        } my-5 rounded-3xl text-theme-pink border-2 border-theme-pink`}
       >
-        Filter &gt;&gt;&gt;
-      </button>
-
-      {isExpanded && (
-        <div className="my-5 rounded-3xl text-theme-pink border-2 border-theme-pink">
-          <header className="flex justify-between p-3 rounded-t-3xl bg-theme-yellow">
-            <h2>Psíčí filter</h2>
+        <header
+          className={`flex justify-between ${
+            isExpanded ? "bg-theme-yellow p-3 rounded-t-3xl" : ""
+          }`}
+        >
+          <h2>{!isExpanded ? "Filter >>>" : "Psíčí filter"} </h2>
+          {isExpanded && (
             <span
               onClick={() => setIsExpanded(false)}
               className="cursor-pointer text-2xl text-theme-pink"
             >
               <AiFillCloseCircle />
             </span>
-          </header>
-          <div className="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-8 gap-3 my-3">
-            <div className="flex flex-col px-5 border-r-2 border-b-2 xl:border-b-0 border-theme-pink">
-              <h3 className="pt-3 text-center font-bold">Pohlavie</h3>
-              <div className="form-control">
-                <label className="cursor-pointer label">
-                  <span className="label-text text-theme-pink">Pes</span>
-                  <input type="checkbox" className="checkbox" />
-                </label>
-              </div>
-              <div className="form-control">
-                <label className="cursor-pointer label">
-                  <span className="label-text text-theme-pink">Fenka</span>
-                  <input type="checkbox" className="checkbox" />
-                </label>
-              </div>
-            </div>
-            <div className="flex flex-col px-5 lg:border-r-2 border-b-2 xl:border-b-0 border-theme-pink">
-              <h3 className="pt-3 text-center font-bold">Vek</h3>
-              <div className="form-control">
-                <label className="cursor-pointer label">
-                  <span className="label-text text-theme-pink">0 - 3</span>
-                  <input type="checkbox" className="checkbox" />
-                </label>
-              </div>
-              <div className="form-control">
-                <label className="cursor-pointer label">
-                  <span className="label-text text-theme-pink">3 - 7</span>
-                  <input type="checkbox" className="checkbox" />
-                </label>
-              </div>
-              <div className="form-control">
-                <label className="cursor-pointer label">
-                  <span className="label-text text-theme-pink">8 - 100</span>
-                  <input type="checkbox" className="checkbox" />
-                </label>
-              </div>
-            </div>
-            <div className="flex flex-col px-5 border-r-2 border-b-2 xl:border-b-0 border-theme-pink">
-              <h3 className="pt-3 text-center font-bold">Očkovaný</h3>
-              <div className="form-control">
-                <label className="cursor-pointer label">
-                  <span className="label-text text-theme-pink">Áno</span>
-                  <input type="checkbox" className="checkbox" />
-                </label>
-              </div>
-              <div className="form-control">
-                <label className="cursor-pointer label">
-                  <span className="label-text text-theme-pink">Nie</span>
-                  <input type="checkbox" className="checkbox" />
-                </label>
-              </div>
-            </div>
-            <div className="flex flex-col px-5 xl:border-r-2 border-b-2 xl:border-b-0 border-theme-pink">
-              <h3 className="pt-3 text-center font-bold">Kastrovaný</h3>
-              <div className="form-control">
-                <label className="cursor-pointer label">
-                  <span className="label-text text-theme-pink">Áno</span>
-                  <input type="checkbox" className="checkbox" />
-                </label>
-              </div>
-              <div className="form-control">
-                <label className="cursor-pointer label">
-                  <span className="label-text text-theme-pink">Nie</span>
-                  <input type="checkbox" className="checkbox" />
-                </label>
-              </div>
-            </div>
-            <div className="flex flex-col px-5 border-r-2 border-b-2 lg:border-b-0 border-theme-pink">
-              <h3 className="pt-3 text-center font-bold">Vhodný k deťom</h3>
-              <div className="form-control">
-                <label className="cursor-pointer label">
-                  <span className="label-text text-theme-pink">Áno</span>
-                  <input type="checkbox" className="checkbox" />
-                </label>
-              </div>
-              <div className="form-control">
-                <label className="cursor-pointer label">
-                  <span className="label-text text-theme-pink">Nie</span>
-                  <input type="checkbox" className="checkbox" />
-                </label>
-              </div>
-            </div>
-            <div className="flex flex-col px-5 lg:border-r-2 border-b-2 lg:border-b-0 border-theme-pink">
-              <h3 className="pt-3 text-center font-bold">Vzrast</h3>
-              <div className="form-control">
-                <label className="cursor-pointer label">
-                  <span className="label-text text-theme-pink">Malý</span>
-                  <input type="checkbox" className="checkbox" />
-                </label>
-              </div>
-              <div className="form-control">
-                <label className="cursor-pointer label">
-                  <span className="label-text text-theme-pink">Stredný</span>
-                  <input type="checkbox" className="checkbox" />
-                </label>
-              </div>
-              <div className="form-control">
-                <label className="cursor-pointer label">
-                  <span className="label-text text-theme-pink">Veľký</span>
-                  <input type="checkbox" className="checkbox" />
-                </label>
-              </div>
-            </div>
-            <div className="flex flex-col px-5 border-r-2 border-theme-pink">
-              <h3 className="pt-3 text-center font-bold">Adopcia</h3>
-              <div className="form-control">
-                <label className="cursor-pointer label">
-                  <span className="label-text text-theme-pink">Klasická</span>
-                  <input type="checkbox" className="checkbox" />
-                </label>
-              </div>
-              <div className="form-control">
-                <label className="cursor-pointer label">
-                  <span className="label-text text-theme-pink">Virtuálna</span>
-                  <input type="checkbox" className="checkbox" />
-                </label>
-              </div>
-            </div>
+          )}
+        </header>
+        {isExpanded && (
+          <div className="grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-8 gap-3 my-3 ">
+            {filterOptions.map((category) => {
+              return (
+                <div
+                  key={category.id}
+                  className="flex flex-col px-5 border-r-2 even:border-r-0 lg:even:border-r-2 border-b-2 xl:border-b-0 lg:[&:nth-child(4)]:border-r-0 xl:lg:[&:nth-child(4)]:border-r-2 border-theme-pink"
+                >
+                  <h3 className="pt-3 text-center font-bold">
+                    {category.title}
+                    {category.options.map((o, idx) => (
+                      <Checkbox
+                        key={idx}
+                        option={o.option}
+                        handleChange={(e) => handleChange(e, category.title)}
+                      />
+                    ))}
+                  </h3>
+                </div>
+              );
+            })}
             <div className="flex flex-col justify-center items-center">
               <button className="max-w-fit px-8 py-2 rounded-3xl text-theme-pink border-2 border-theme-pink hover:bg-theme-pink hover:text-theme-light">
                 Filtruj
               </button>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
