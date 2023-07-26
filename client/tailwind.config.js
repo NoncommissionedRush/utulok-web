@@ -29,8 +29,4 @@ module.exports = {
       titan: ["var(--font-titan)"],
     },
   },
-  plugins: [require("daisyui")],
-  daisyui: {
-    themes: ["light"],
-  },
 };

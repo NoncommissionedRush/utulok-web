@@ -1,91 +1,111 @@
 export const filterOptions = [
   {
     id: 1,
-    title: "Pohlavie",
+    title: "sex",
+    displayTitle: "Pohlavie",
     options: [
       {
-        option: "Pes",
+        option: "male",
+        displayOption: "Pes",
       },
       {
-        option: "Fenka",
+        option: "female",
+        displayOption: "Fenka",
       },
     ],
   },
   {
     id: 2,
-    title: "Vek",
+    title: "age",
+    displayTitle: "Vek",
     options: [
       {
-        option: "0 - 3",
+        option: "puppy",
+        displayOption: "0 - 3",
       },
       {
-        option: "3 - 7",
+        option: "teen",
+        displayOption: "3 - 7",
       },
       {
-        option: "8 - 100",
+        option: "adult",
+        displayOption: "8 - 100",
       },
     ],
   },
   {
     id: 3,
-    title: "Očkovaný",
+    title: "isVaccinated",
+    displayTitle: "Očkovaný",
     options: [
       {
-        option: "Áno",
+        option: true,
+        displayOption: "Áno",
       },
       {
-        option: "Nie",
+        option: false,
+        displayOption: "Nie",
       },
     ],
   },
   {
     id: 4,
-    title: "Kastrovaný",
+    title: "isCastrated",
+    displayTitle: "Kastrovaný",
     options: [
       {
-        option: "Áno",
+        option: true,
+        displayOption: "Áno",
       },
       {
-        option: "Nie",
+        option: false,
+        displayOption: "Nie",
       },
     ],
   },
   {
     id: 5,
-    title: "Vhodný k deťom",
+    title: "isKidFriendly",
+    displayTitle: "Vhodný k deťom",
     options: [
       {
-        option: "Áno",
+        option: true,
+        displayOption: "Áno",
       },
-      {
-        option: "Nie",
-      },
+      { option: false, displayOption: "Nie" },
     ],
   },
   {
     id: 6,
-    title: "Vzrast",
+    title: "size",
+    displayTitle: "Vzrast",
     options: [
       {
-        option: "Malý",
+        option: "small",
+        displayOption: "Malý",
       },
       {
-        option: "Stredný",
+        option: "medium",
+        displayOption: "Stredný",
       },
       {
-        option: "Veľký",
+        option: "big",
+        displayOption: "Veľký",
       },
     ],
   },
   {
     id: 7,
-    title: "Adopcia",
+    title: "adoption",
+    displayTitle: "Adopcia",
     options: [
       {
-        option: "Klasická",
+        option: "classic",
+        displayOption: "Klasická",
       },
       {
-        option: "Virtuálna",
+        option: "virtual",
+        displayOption: "Virtuálna",
       },
     ],
   },

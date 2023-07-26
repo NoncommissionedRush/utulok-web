@@ -7,7 +7,7 @@ export default function About() {
         <h1 className="my-5 text-3xl font-titan text-stroke-bold-yellow text-theme-pink">
           O nás
         </h1>
-        <div className="my-5 max-w-4xl mx-auto text-theme-pink">
+        <div className="my-5 max-w-4xl text-theme-pink">
           <p className="mb-5">
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum
             maxime eveniet quo dolores voluptatum quibusdam, aperiam blanditiis
@@ -25,45 +25,46 @@ export default function About() {
             nesciunt, distinctio suscipit in excepturi pariatur, neque
             consequuntur reprehenderit iusto!
           </p>
-          <Image
-            src="/utulok-logo.png"
-            alt="logo"
-            width={"175"}
-            height={"175"}
-            priority
-            className="rounded-full mx-auto my-14"
-          />
-          <div className="flex flex-col sm:flex-row gap-5 md:gap-10 my-10 justify-center text-center">
-            <div>
-              <Image
-                src="/team/one.png"
-                alt="member one"
-                width={"75"}
-                height={"75"}
-                className="rounded-full mx-auto mb-2 md:w-24 md:h-24"
-              />
-              <p>Mária Ďuríčková</p>
-            </div>
-            <div>
-              <Image
-                src="/team/two.png"
-                alt="member two"
-                width={"75"}
-                height={"75"}
-                className="rounded-full mx-auto mb-2 md:w-24 md:h-24"
-              />
-              <p>Klára Jarunková</p>
-            </div>
-            <div>
-              <Image
-                src="/team/three.png"
-                alt="member three"
-                width={"75"}
-                height={"75"}
-                className="rounded-full mx-auto mb-2 md:w-24 md:h-24"
-              />
-              <p>Ľudmila Podjavorinská</p>
-            </div>
+        </div>
+
+        <Image
+          src="/utulok-logo.png"
+          alt="logo"
+          width={"175"}
+          height={"175"}
+          priority
+          className="rounded-full mx-auto my-10"
+        />
+        <div className="flex flex-col sm:flex-row gap-5 md:gap-10 my-10 justify-center text-center">
+          <div>
+            <Image
+              src="/team/one.png"
+              alt="member one"
+              width={"75"}
+              height={"75"}
+              className="rounded-full mx-auto mb-2 md:w-24 md:h-24"
+            />
+            <p>Mária Ďuríčková</p>
+          </div>
+          <div>
+            <Image
+              src="/team/two.png"
+              alt="member two"
+              width={"75"}
+              height={"75"}
+              className="rounded-full mx-auto mb-2 md:w-24 md:h-24"
+            />
+            <p>Klára Jarunková</p>
+          </div>
+          <div>
+            <Image
+              src="/team/three.png"
+              alt="member three"
+              width={"75"}
+              height={"75"}
+              className="rounded-full mx-auto mb-2 md:w-24 md:h-24"
+            />
+            <p>Ľudmila Podjavorinská</p>
           </div>
         </div>
       </div>

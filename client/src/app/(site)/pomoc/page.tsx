@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Accordion from "./Accordion";
 
 export default function Help() {
   return (
@@ -7,7 +7,7 @@ export default function Help() {
         <h1 className="my-5 text-3xl font-titan text-stroke-bold-yellow text-theme-pink">
           Ako pomôcť
         </h1>
-        <div className="mt-5">
+        <div className="mt-5 max-w-4xl">
           <p className="mb-5">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae
             omnis dicta iste eligendi quisquam vero enim ad, autem tempora
@@ -24,136 +24,7 @@ export default function Help() {
           </p>
         </div>
 
-        <div className="mt-5 mb-10">
-          <div className="collapse collapse-arrow rounded-none border-theme-dark border-b-2">
-            <input type="radio" name="my-accordion-1" />
-
-            <div className="collapse-title">
-              <h2 className="text-xl text-theme-pink font-bold mb-2">
-                Adopcia
-              </h2>
-            </div>
-            <div className="collapse-content flex flex-col lg:flex-row justify-between">
-              <div>
-                <p className="max-w-2xl mb-3">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                  Totam quas magnam perferendis quis nemo aperiam iure eum
-                  necessitatibus atque sed et, eligendi quam, dolorum deleniti
-                  consectetur, provident expedita obcaecati amet consequatur hic
-                  fuga ut! Tempora blanditiis magnam saepe quibusdam doloribus,
-                  explicabo debitis aspernatur non modi corrupti voluptatum rem
-                  est asperiores.
-                </p>
-                <p className="max-w-2xl mb-3">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                  Totam quas magnam perferendis quis nemo aperiam iure eum
-                  necessitatibus atque sed et, eligendi quam, dolorum deleniti
-                  consectetur, provident expedita obcaecati amet consequatur hic
-                  fuga ut! Tempora blanditiis magnam saepe quibusdam doloribus,
-                  explicabo debitis aspernatur non modi corrupti voluptatum rem
-                  est asperiores.
-                </p>
-              </div>
-              <div className="flex items-end relative top-4">
-                <Image
-                  src={"/ilust.png"}
-                  alt="ilustracia psik"
-                  width={150}
-                  height={150}
-                  placeholder="blur"
-                  blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg=="
-                />
-              </div>
-            </div>
-          </div>
-          <div className="collapse collapse-arrow rounded-none border-theme-dark border-b-2">
-            <input type="radio" name="my-accordion-1" />
-
-            <div className="collapse-title">
-              <h2 className="text-xl text-theme-pink font-bold mb-2">
-                Virtuálna adopcia
-              </h2>
-            </div>
-            <div className="collapse-content">
-              <p className="max-w-2xl">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Totam
-                quas magnam perferendis quis nemo aperiam iure eum
-                necessitatibus atque sed et, eligendi quam, dolorum deleniti
-                consectetur, provident expedita obcaecati amet consequatur hic
-                fuga ut! Tempora blanditiis magnam saepe quibusdam doloribus,
-                explicabo debitis aspernatur non modi corrupti voluptatum rem
-                est asperiores.
-              </p>
-            </div>
-          </div>
-          <div className="collapse collapse-arrow rounded-none border-theme-dark border-b-2">
-            <input type="radio" name="my-accordion-1" />
-
-            <div className="collapse-title">
-              <h2 className="text-xl text-theme-pink font-bold mb-2">
-                Dočasná opatera
-              </h2>
-            </div>
-            <div className="collapse-content">
-              <p className="max-w-2xl">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Totam
-                quas magnam perferendis quis nemo aperiam iure eum
-                necessitatibus atque sed et, eligendi quam, dolorum deleniti
-                consectetur, provident expedita obcaecati amet consequatur hic
-                fuga ut! Tempora blanditiis magnam saepe quibusdam doloribus,
-                explicabo debitis aspernatur non modi corrupti voluptatum rem
-                est asperiores.
-              </p>
-            </div>
-          </div>
-          <div className="collapse collapse-arrow rounded-none border-theme-dark border-b-2">
-            <input type="radio" name="my-accordion-1" />
-
-            <div className="collapse-title">
-              <h2 className="text-xl text-theme-pink font-bold mb-2">
-                Prispieť na útulok
-              </h2>
-            </div>
-            <div className="collapse-content">
-              <p className="max-w-2xl">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Totam
-                quas magnam perferendis quis nemo aperiam iure eum
-                necessitatibus atque sed et, eligendi quam, dolorum deleniti
-                consectetur, provident expedita obcaecati amet consequatur hic
-                fuga ut! Tempora blanditiis magnam saepe quibusdam doloribus,
-                explicabo debitis aspernatur non modi corrupti voluptatum rem
-                est asperiores.
-              </p>
-            </div>
-          </div>
-          <div className="collapse collapse-arrow rounded-none">
-            <input type="radio" name="my-accordion-1" />
-
-            <div className="collapse-title">
-              <h2 className="text-xl text-theme-pink font-bold mb-2">
-                Venujte nám 2%
-              </h2>
-            </div>
-            <div className="collapse-content">
-              <p className="max-w-2xl">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Totam
-                quas magnam perferendis quis nemo aperiam iure eum
-                necessitatibus atque sed et, eligendi quam, dolorum deleniti
-                consectetur, provident expedita obcaecati amet consequatur hic
-                fuga ut! Tempora blanditiis magnam saepe quibusdam doloribus,
-                explicabo debitis aspernatur non modi corrupti voluptatum rem
-                est asperiores.
-              </p>
-              <a
-                href=""
-                download=""
-                className="block max-w-fit px-4 py-2 my-5 rounded-3xl text-theme-dark border-2 border-theme-dark hover:bg-theme-dark hover:text-theme-light"
-              >
-                Stiahnuť formulár
-              </a>
-            </div>
-          </div>
-        </div>
+        <Accordion />
       </div>
       <div className="custom-shape-divider-bottom-footer">
         <svg

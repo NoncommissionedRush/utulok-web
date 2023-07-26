@@ -49,12 +49,14 @@ export default function DogFilter() {
                   className="flex flex-col px-5 border-r-2 even:border-r-0 lg:even:border-r-2 border-b-2 xl:border-b-0 lg:[&:nth-child(4)]:border-r-0 xl:lg:[&:nth-child(4)]:border-r-2 border-theme-pink"
                 >
                   <h3 className="pt-3 text-center font-bold">
-                    {category.title}
+                    {category.displayTitle}
                     {category.options.map((o, idx) => (
                       <Checkbox
                         key={idx}
-                        option={o.option}
-                        handleChange={(e) => handleChange(e, category.title)}
+                        option={o.displayOption}
+                        handleChange={(e) =>
+                          handleChange(e, category.displayTitle)
+                        }
                       />
                     ))}
                   </h3>
