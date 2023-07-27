@@ -7,13 +7,13 @@ export default function AccordionItem({
   title,
   id,
   content,
-  handleOpenItem,
+  handleToggleOpen,
   activeIndex,
 }: any) {
   return (
     <div className="border-theme-dark border-b-2">
       <div
-        onClick={() => handleOpenItem(id)}
+        onClick={() => handleToggleOpen(id)}
         className="flex justify-between items-center p-4 cursor-pointer"
       >
         <h2 className="text-xl text-theme-pink font-bold">{title}</h2>
@@ -36,7 +36,7 @@ export default function AccordionItem({
                 src={"/ilust.png"} // make illustrations dynamic ❗❗❗
                 alt="ilustracia psik"
                 width={150}
-                height={150}
+                height={168}
                 placeholder="blur"
                 blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+hHgAHggJ/PchI7wAAAABJRU5ErkJggg=="
               />

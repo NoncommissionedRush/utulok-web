@@ -3,6 +3,8 @@
 import { useState, useEffect, useLayoutEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import DogFilter from "./DogFilter";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function DogList({ users }: any) {
   const DOGS_SHOWN = 8;
@@ -28,6 +30,7 @@ export default function DogList({ users }: any) {
 
   return (
     <>
+      <DogFilter />
       <div className="grid grid-cols-fit-grid gap-4 my-10 justify-center text-center">
         {users?.slice(0, next).map((user: any) => {
           return (

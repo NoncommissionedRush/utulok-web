@@ -7,7 +7,7 @@ import AccordionItem from "./AccordionItem";
 export default function Accordion() {
   const [activeIndex, setActiveIndex] = useState(-1);
 
-  const handleOpenItem = (id: number) =>
+  const handleToggleOpen = (id: number) =>
     id !== activeIndex ? setActiveIndex(id) : setActiveIndex(-1);
 
   return (
@@ -19,7 +19,7 @@ export default function Accordion() {
             id={id}
             title={title}
             content={content}
-            handleOpenItem={handleOpenItem}
+            handleToggleOpen={handleToggleOpen}
             activeIndex={activeIndex}
           />
         );

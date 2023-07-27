@@ -1,4 +1,3 @@
-import DogFilter from "./DogFilter";
 import DogList from "./DogList";
 
 async function getDogs() {
@@ -23,7 +22,6 @@ export default async function Dogs() {
         <h1 className="my-5 text-3xl font-titan text-stroke-bold-yellow text-theme-pink">
           Naše psíky
         </h1>
-        <DogFilter />
         <DogList users={users} />
       </div>
       <div className="custom-shape-divider-bottom-footer">
