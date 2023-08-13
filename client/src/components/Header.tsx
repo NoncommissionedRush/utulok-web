@@ -94,7 +94,7 @@ export default function Header() {
               +421 000 000 000
             </a>
           </div>
-          <div className="flex gap-5 mb-8 text-2xl xl:hidden">
+          <div className="flex gap-5 mb-14 text-2xl xl:hidden">
             <a href="#" rel="noopener" className="hover:text-theme-light">
               {" "}
               <FaFacebook />

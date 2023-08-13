@@ -61,7 +61,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="custom-shape-divider-bottom-1688744264">
+        <div className="wave-divider-bottom wave-pink">
           <svg
             data-name="Layer 1"
             xmlns="http://www.w3.org/2000/svg"
@@ -85,7 +85,7 @@ export default function Home() {
         <div className="md:container px-1 mb-20">
           <DogSampleList />
         </div>
-        <div className="custom-shape-divider-bottom-1688744883">
+        <div className="wave-divider-bottom wave-white">
           <svg
             data-name="Layer 1"
             xmlns="http://www.w3.org/2000/svg"
@@ -160,7 +160,7 @@ export default function Home() {
             </p>
           </div>
         </div>
-        <div className="custom-shape-divider-bottom-1688744991">
+        <div className="wave-divider-bottom wave-green">
           <svg
             data-name="Layer 1"
             xmlns="http://www.w3.org/2000/svg"
@@ -231,7 +231,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="custom-shape-divider-bottom-footer">
+        <div className="wave-divider-bottom wave-yellow">
           <svg
             data-name="Layer 1"
             xmlns="http://www.w3.org/2000/svg"

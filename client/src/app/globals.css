@@ -35,8 +35,8 @@ html {
   }
 }
 
-/* Wave divider 1 */
-.custom-shape-divider-bottom-1688744264 {
+/* Wave dividers */
+.wave-divider-bottom {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -47,110 +47,25 @@ html {
   transform: rotate(180deg);
 }
 
-.custom-shape-divider-bottom-1688744264 svg {
+.wave-divider-bottom svg {
   position: relative;
   display: block;
   width: calc(100% + 1.3px);
   height: 77px;
 }
 
-.custom-shape-divider-bottom-1688744264 .shape-fill {
+.wave-pink .shape-fill {
   fill: #ff92a5;
 }
 
-/* Wave divider 2 */
-.custom-shape-divider-bottom-1688744883 {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  margin-bottom: -1px;
-  width: 100%;
-  overflow: hidden;
-  line-height: 0;
-  transform: rotate(180deg);
-}
-
-.custom-shape-divider-bottom-1688744883 svg {
-  position: relative;
-  display: block;
-  width: calc(100% + 1.3px);
-  height: 77px;
-}
-
-.custom-shape-divider-bottom-1688744883 .shape-fill {
+.wave-white .shape-fill {
   fill: #fffef5;
 }
 
-/* Wave divider 3 */
-.custom-shape-divider-bottom-1688744991 {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  margin-bottom: -1px;
-  width: 100%;
-  overflow: hidden;
-  line-height: 0;
-  transform: rotate(180deg);
-}
-
-.custom-shape-divider-bottom-1688744991 svg {
-  position: relative;
-  display: block;
-  width: calc(100% + 1.3px);
-  height: 77px;
-}
-
-.custom-shape-divider-bottom-1688744991 .shape-fill {
+.wave-green .shape-fill {
   fill: #64bac3;
 }
 
-/* Wave divider footer */
-.custom-shape-divider-bottom-footer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  margin-bottom: -1px;
-  overflow: hidden;
-  line-height: 0;
-  transform: rotate(180deg);
-}
-
-.custom-shape-divider-bottom-footer svg {
-  position: relative;
-  display: block;
-  width: calc(100% + 1.3px);
-  height: 77px;
-}
-
-.custom-shape-divider-bottom-footer .shape-fill {
+.wave-yellow .shape-fill {
   fill: #fede3c;
 }
-
-/* Carousel controls */
-/* .swiper-button-prev,
-.swiper-button-next {
-}
-.swiper-button-prev:after {
-  content: "<";
-  position: absolute;
-  top: 50%;
-  bottom: 50%;
-  left: 0;
-}
-
-.swiper-button-next:after {
-  content: ">";
-  position: absolute;
-  top: 50%;
-  bottom: 50%;
-  right: 0;
-} */
-
-/* .swiper-button-prev:hover,
-.swiper-button-prev:active,
-.swiper-button-next:hover,
-.swiper-button-next:active {
-  background: slategrey;
-  opacity: 0.5;
-} */

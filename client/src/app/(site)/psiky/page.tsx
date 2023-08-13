@@ -24,7 +24,7 @@ export default async function Dogs() {
         </h1>
         <DogList users={users} />
       </div>
-      <div className="custom-shape-divider-bottom-footer">
+      <div className="wave-divider-bottom wave-yellow">
         <svg
           data-name="Layer 1"
           xmlns="http://www.w3.org/2000/svg"
