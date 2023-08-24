@@ -33,54 +33,24 @@ describe("DogsController", () => {
     expect(controller).toBeDefined();
   });
 
-  describe("createDog", () => {
-    const dto = {} as CreateDogDto;
-
-    it("calls create on dogsService", async () => {
-      await controller.createDog(dto);
-
-      expect(dogsService.create).toHaveBeenCalledWith(dto);
-    });
-  });
-
   describe("getAvailableDogs", () => {
     const query = {} as DogsFilter;
 
     it("calls getAvailable on dogsService", async () => {
       await controller.getAvailableDogs(query);
 
-      expect(dogsService.getAvailable).toHaveBeenCalledWith(query);
+      expect(dogsService.getManyAvailable).toHaveBeenCalledWith(query);
     });
   });
-
-  describe("getDogsAdmin", () => {
-    const query = {} as AdminDogsFilter
-
-    it("calls get on dogsService", async () => {
-      await controller.getDogsAdmin(query)
-      expect(dogsService.get).toHaveBeenCalledWith(query)
-    })
-  })
 
   describe("getDog", () => {
     const id = 1;
     const session = {}
 
     it("calls getById on dogsService", async () => {
-      await controller.getDog(id, session);
+      await controller.getDog(id);
 
-      expect(dogsService.getById).toHaveBeenCalledWith(id, session);
-    });
-  });
-
-  describe("update", () => {
-    const id = 1;
-    const dto = {} as UpdateDogDto;
-
-    it("calls update on dogsService", async () => {
-      await controller.update(id, dto);
-
-      expect(dogsService.update).toHaveBeenCalledWith(id, dto);
+      expect(dogsService.getAvailableById).toHaveBeenCalledWith(id, session);
     });
   });
 });

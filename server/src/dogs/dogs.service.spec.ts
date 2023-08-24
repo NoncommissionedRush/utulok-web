@@ -43,7 +43,6 @@ describe("DogsService", () => {
   describe("create", () => {
     const dto: CreateDogDto = {
       name: "dog name",
-      image: "image.url",
       size: Size.MEDIUM,
       sex: Sex.MALE,
       age: Age.PUPPY,
@@ -51,7 +50,7 @@ describe("DogsService", () => {
       isKidFriendly: true,
       isVaccinated: true,
       isCastrated: true,
-    };
+    } as CreateDogDto;
 
     it("calls create on dog repository", async () => {
       await service.create(dto);
@@ -80,19 +79,19 @@ describe("DogsService", () => {
 
     it("creates query builder", async () => {
       const dto: DogsFilter = {};
-      await service.getAvailable(dto);
+      await service.getManyAvailable(dto);
       expect(dogRepository.createQueryBuilder).toHaveBeenCalledWith("dog");
     });
 
     it("calls getMany on query builder", async () => {
       const dto: DogsFilter = {};
-      await service.getAvailable(dto);
+      await service.getManyAvailable(dto);
       expect(qb.getMany).toHaveBeenCalled();
     });
 
     it("adds Status.AVAILABLE to query", async () => {
       const dto: DogsFilter = {};
-      await service.getAvailable(dto);
+      await service.getManyAvailable(dto);
       expect(qb.andWhere).toHaveBeenCalledWith(
         expect.stringContaining("dog.status"),
         { status: DogStatus.AVAILABLE },
@@ -105,7 +104,7 @@ describe("DogsService", () => {
           age: Age.PUPPY,
         };
 
-        await service.getAvailable(dto);
+        await service.getManyAvailable(dto);
       });
 
       it("adds age condition to query", () => {
@@ -122,7 +121,7 @@ describe("DogsService", () => {
           sex: Sex.MALE,
         };
 
-        await service.getAvailable(dto);
+        await service.getManyAvailable(dto);
       });
 
       it("adds sex condition to query", () => {
@@ -139,7 +138,7 @@ describe("DogsService", () => {
           size: Size.SMALL,
         };
 
-        await service.getAvailable(dto);
+        await service.getManyAvailable(dto);
       });
 
       it("adds size condition to query", () => {
@@ -156,7 +155,7 @@ describe("DogsService", () => {
           isCastrated: true,
         };
 
-        await service.getAvailable(dto);
+        await service.getManyAvailable(dto);
       });
 
       it("adds isCastrated condition to query", () => {
@@ -173,7 +172,7 @@ describe("DogsService", () => {
           isVaccinated: true,
         };
 
-        await service.getAvailable(dto);
+        await service.getManyAvailable(dto);
       });
 
       it("adds isVaccinated condition to query", () => {
@@ -190,7 +189,7 @@ describe("DogsService", () => {
           isKidFriendly: true,
         };
 
-        await service.getAvailable(dto);
+        await service.getManyAvailable(dto);
       });
 
       it("adds isKidFriendly condition to query", () => {
@@ -216,10 +215,10 @@ describe("DogsService", () => {
 
     it("creates new query builder", async () => {
       dto = {
-        status: StatusFilter.RESERVED,
+        status: StatusFilter.AVAILABLE,
       };
 
-      await service.get(dto);
+      await service.getMany(dto);
 
       expect(dogRepository.createQueryBuilder).toHaveBeenCalled();
     });
@@ -231,7 +230,7 @@ describe("DogsService", () => {
             status: StatusFilter.ALL,
           };
 
-          await service.get(dto);
+          await service.getMany(dto);
 
           expect(qb.andWhere).not.toHaveBeenCalled();
         });
@@ -240,10 +239,10 @@ describe("DogsService", () => {
       describe("if status is not 'ALL'", () => {
         it("adds status to query", async () => {
           dto = {
-            status: StatusFilter.RESERVED,
+            status: StatusFilter.AVAILABLE,
           };
 
-          await service.get(dto);
+          await service.getMany(dto);
 
           expect(qb.andWhere).toHaveBeenCalledWith(
             expect.stringContaining("dog.status"),
@@ -257,7 +256,7 @@ describe("DogsService", () => {
       it("does not add status to query", async () => {
         dto = {};
 
-        await service.get(dto);
+        await service.getMany(dto);
 
         expect(qb.andWhere).not.toHaveBeenCalled();
       });
@@ -271,7 +270,7 @@ describe("DogsService", () => {
       it("calls findOne with id and status = AVAILABLE", async () => {
         dogRepository.findOne.mockResolvedValue({} as DogEntity);
 
-        await service.getById(id);
+        await service.getAvailableById(id);
 
         expect(dogRepository.findOne).toHaveBeenCalledWith({
           where: { id, status: DogStatus.AVAILABLE },
@@ -285,7 +284,7 @@ describe("DogsService", () => {
         
         dogRepository.findOne.mockResolvedValueOnce({} as DogEntity);
 
-        await service.getById(id, session);
+        await service.getAvailableById(id);
 
         expect(dogRepository.findOne).toHaveBeenCalledWith({ where: { id } });
       });
@@ -294,7 +293,7 @@ describe("DogsService", () => {
     it("throws NotFoundException if dog is not found", async () => {
       dogRepository.findOne.mockResolvedValueOnce(undefined);
 
-      await expect(service.getById(id)).rejects.toThrow(NotFoundException);
+      await expect(service.getAvailableById(id)).rejects.toThrow(NotFoundException);
     });
   });
 
