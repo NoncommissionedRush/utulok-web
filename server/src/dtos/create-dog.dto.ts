@@ -9,14 +9,14 @@ import {
 import { Age, EligibleFor, Sex, Size, DogStatus } from "src/entities/dog.entity";
 import { Dog } from "../@types";
 
-export class CreateDogDto implements Dog {
+export class CreateDogDto implements Omit<Dog, 'id'> {
   @IsString()
   @IsNotEmpty()
   name: string;
 
-  // @IsUrl()
-  // @IsNotEmpty()
-  // image: string;
+  @IsUrl()
+  @IsOptional()
+  mainImageUrl: string;
 
   @IsEnum(Size)
   @IsNotEmpty()

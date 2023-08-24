@@ -1,4 +1,4 @@
-import { BeforeInsert, Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { VirtualAdoption } from "./virtual-adoption.entity";
 import { StandardAdoption } from "./standard-adoption.entity";
 import { TemporaryAdoption } from "./temporary-adoption.entity";
@@ -96,6 +96,12 @@ export class DogEntity implements Dog {
 
   @OneToMany(() => VirtualAdoption, adoption => adoption.dog)
   virtualAdoptions: VirtualAdoption[]
+
+  // @OneToMany(() => FileEntity, file => file.dog)
+  // images: FileEntity[]
+
+  @Column({ nullable: true })
+  mainImageUrl: string;
 
   @Column({
     type: 'bigint',
