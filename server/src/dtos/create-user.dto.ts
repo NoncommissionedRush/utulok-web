@@ -8,6 +8,6 @@ export class CreateUserDto {
 
     @IsNotEmpty()
     @IsString()
-    @IsStrongPassword()
+    // @IsStrongPassword() // TODO: uncomment in production
     password: string;
 }
