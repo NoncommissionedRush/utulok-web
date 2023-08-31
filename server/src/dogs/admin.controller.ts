@@ -5,13 +5,15 @@ import { CreateDogDto } from '../dtos/create-dog.dto';
 import { UpdateDogDto } from '../dtos/update-dog.dto';
 import { DogsService } from './dogs.service';
 import { ProcessAdoptionDto } from '../dtos/process-adoption.dto';
+import { MailingService } from '../mailing/mailing.service';
 
 // @UseGuards(AuthGuard)
 @Controller('admin')
 export class AdminController {
 constructor(
     private readonly dogsService: DogsService,
-    private readonly adoptionService: AdoptionService
+    private readonly adoptionService: AdoptionService,
+    private readonly mailingService: MailingService
   ) {}
 
   @Post("/dog")
@@ -22,8 +24,8 @@ constructor(
   //TODO: fix validation on incoming query
   @Post("process-adoption")
   async processAdoption(@Body() dto: ProcessAdoptionDto) {
-    //TODO: send email to adopter
-    this.adoptionService.processAdoption(dto);
+    const adoption = await this.adoptionService.processAdoption(dto);
+    await this.mailingService.confirmAdoption(adoption.adopterEmail) 
   }
 
   @Get("/pending-adoptions")
