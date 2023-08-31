@@ -34,12 +34,12 @@ export class DogsController {
   }
 
   @Get("/")
-  async getAvailableDogs(@Query() query: DogsFilter) {
-    return this.dogsService.getManyAvailable(query);
+  async getAvailableDogs(@Query() query: DogsFilter): Promise<Dog[]> {
+    return await this.dogsService.getManyAvailable(query);
   }
 
   @Get("/:id")
-  async getDog(@Param("id") id: number) {
-    return this.dogsService.getAvailableById(id);
+  async getDog(@Param("id") id: number): Promise<Dog> {
+    return await this.dogsService.getAvailableById(id);
   }
 }

@@ -1,13 +1,12 @@
-import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { StandardAdoption } from '../entities/standard-adoption.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindOperator, FindOptionsWhere, Repository } from 'typeorm';
 import { VirtualAdoption } from '../entities/virtual-adoption.entity';
 import { TemporaryAdoption } from '../entities/temporary-adoption.entity';
 import { AdoptDogDto } from '../dtos/adopt-dog.dto';
-import { Adoption } from '../@types';
-import { AdoptionApprovalStatus, AdoptionType } from '../entities/abstract.adoption';
 import { DogEntity } from '../entities/dog.entity';
+import { Adoption, AdoptionApprovalStatus, AdoptionType } from '../../../types';
 
 @Injectable()
 export class AdoptionRepository {
@@ -20,7 +19,7 @@ export class AdoptionRepository {
         private readonly temporaryAdoptionRepository: Repository<TemporaryAdoption>,
     ) { }
 
-    async createAdoption(dto: AdoptDogDto, dog?: DogEntity): Promise<Adoption> {
+    async createAdoption(dto: AdoptDogDto, dog: DogEntity): Promise<Adoption> {
         const repository = this.getRepository(dto.type);
 
         const newAdoption = repository.create({
@@ -35,7 +34,7 @@ export class AdoptionRepository {
 
         newAdoption.dog = dog;
 
-        return repository.save(newAdoption);
+        return await repository.save(newAdoption);
     }
 
     async findOneBy(options: FindOptionsWhere<Adoption>): Promise<Adoption> {
@@ -80,28 +79,27 @@ export class AdoptionRepository {
         return [...standardAdoptions, ...temporaryAdoptions]
     }
 
-    async setAdoptionStatus(adoption: Adoption, status: AdoptionApprovalStatus) {
+    async setAdoptionStatus(adoption: Adoption, status: AdoptionApprovalStatus): Promise<Adoption> {
         const repository = this.getRepository(adoption.type);
 
-        return repository.save({ ...adoption, approvalStatus: status })
+        return await repository.save({ ...adoption, approvalStatus: status })
     }
 
-    async remove(adoption: Adoption) {
+    async remove(adoption: Adoption): Promise<Adoption> {
         const repository = this.getRepository(adoption.type);
 
-        return repository.remove(adoption);
+        return await repository.remove(adoption);
     }
 
     async deleteVirtualAdoptions(dogId: number) {
-        return this.virtualAdoptionRepository.createQueryBuilder('adoption')
+        return await this.virtualAdoptionRepository.createQueryBuilder('adoption')
             .where('dogId = :id', { id: dogId })
             .delete()
             .execute()
-
     }
 
     async deleteTemporaryAdoption(dogId: number) {
-        return this.temporaryAdoptionRepository.createQueryBuilder('adoption')
+        return await this.temporaryAdoptionRepository.createQueryBuilder('adoption')
             .where('dogId = :id', { id: dogId })
             .delete()
             .execute()

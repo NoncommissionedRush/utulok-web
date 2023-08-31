@@ -1,13 +1,12 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { Adoption } from '../@types';
 import { AdoptDogDto } from '../dtos/adopt-dog.dto';
 import { AdoptionRepository } from './adoption.repository';
-import { AdoptionApprovalStatus, AdoptionType } from '../entities/abstract.adoption';
 import { DogsService } from '../dogs/dogs.service';
-import { DogEntity, EligibleFor } from '../entities/dog.entity';
+import { DogEntity } from '../entities/dog.entity';
 import { ProcessAdoptionDto } from '../dtos/process-adoption.dto';
 import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
 import { Events } from '../events';
+import { Adoption, EligibleFor, AdoptionType, AdoptionApprovalStatus } from '../../../types';
 
 @Injectable()
 export class AdoptionService {
@@ -31,7 +30,7 @@ export class AdoptionService {
 
         await this.validateDuplicateAdoption(dto)
 
-        return this.adoptionRepository.createAdoption(dto, dog)
+        return await this.adoptionRepository.createAdoption(dto, dog)
     }
 
     private async validateDuplicateAdoption(dto: AdoptDogDto): Promise<void> {
@@ -51,28 +50,30 @@ export class AdoptionService {
      * 
      * Throws NotFoundException if adoption is not found.
      */
-    async processAdoption(dto: ProcessAdoptionDto) {
+    async processAdoption(dto: ProcessAdoptionDto): Promise<Adoption> {
         const adoption = await this.adoptionRepository.findOneBy({ id: dto.id, type: dto.type })
 
         if (!adoption) throw new NotFoundException('Adoption not found');
 
         if (adoption.type === AdoptionType.STANDARD) {
-            this.processStandardAdoption(adoption, dto.status);
+            await this.processStandardAdoption(adoption, dto.status);
         }
 
         if (adoption.type === AdoptionType.TEMPORARY) {
-            this.processTemporaryAdoption(adoption, dto.status);
+            await this.processTemporaryAdoption(adoption, dto.status);
         }
+
+        return adoption;
     }
 
     /**
      * Returns all adoptions with status 'pending'
      */
-    async getPendingAdoptions() {
-        return this.adoptionRepository.getPendingAdoptions();
+    async getPendingAdoptions(): Promise<Adoption[]> {
+        return await this.adoptionRepository.getPendingAdoptions();
     }
 
-    private async processStandardAdoption(adoption: Adoption, status: AdoptionApprovalStatus) {
+    private async processStandardAdoption(adoption: Adoption, status: AdoptionApprovalStatus): Promise<void> {
         if (status === AdoptionApprovalStatus.APPROVED) {
             await this.eventEmitter.emitAsync(Events.ADOPTION_STANDARD_APPROVED, adoption)
 
@@ -90,8 +91,8 @@ export class AdoptionService {
         }
     }
 
-    private processTemporaryAdoption(adoption: Adoption, status: AdoptionApprovalStatus) {
-        this.adoptionRepository.setAdoptionStatus(adoption, status)
+    private async processTemporaryAdoption(adoption: Adoption, status: AdoptionApprovalStatus) {
+        await this.adoptionRepository.setAdoptionStatus(adoption, status)
     }
 
     @OnEvent(Events.DOG_DECEASED)
