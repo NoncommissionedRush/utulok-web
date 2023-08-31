@@ -1,11 +1,8 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { DogsController } from "./dogs.controller";
 import { DogsService } from "./dogs.service";
-import { MockProvider } from "src/@types";
-import { CreateDogDto } from "src/dtos/create-dog.dto";
 import { DogsFilter } from "src/dtos/dogs-filter.dto";
-import { UpdateDogDto } from "src/dtos/update-dog.dto";
-import { AdminDogsFilter } from "src/dtos/adming-dogs-filter.dto";
+import { MockProvider } from "../../../types";
 
 describe("DogsController", () => {
   let controller: DogsController;

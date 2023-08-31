@@ -1,14 +1,14 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { DogsService } from "./dogs.service";
 import { getRepositoryToken } from "@nestjs/typeorm";
-import { Age, DogEntity, Sex, Size, DogStatus } from "src/entities/dog.entity";
-import { MockProvider } from "src/@types";
+import { DogEntity } from "src/entities/dog.entity";
 import { Repository } from "typeorm";
 import { CreateDogDto } from "src/dtos/create-dog.dto";
 import { DogsFilter } from "src/dtos/dogs-filter.dto";
 import { NotFoundException } from "@nestjs/common";
 import { UpdateDogDto } from "src/dtos/update-dog.dto";
 import { AdminDogsFilter, StatusFilter } from "src/dtos/adming-dogs-filter.dto";
+import { MockProvider, Size, Sex, Age, DogStatus } from "../../../types";
 
 describe("DogsService", () => {
   let service: DogsService;

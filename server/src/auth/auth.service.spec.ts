@@ -1,7 +1,7 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { AuthService } from "./auth.service";
 import { UsersService } from "src/users/users.service";
-import { MockProvider } from "src/@types";
+import { MockProvider } from "../../../types";
 
 describe("AuthService", () => {
   let service: AuthService;
