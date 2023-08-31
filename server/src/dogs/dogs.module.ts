@@ -5,9 +5,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DogEntity } from 'src/entities/dog.entity';
 import { AdoptionModule } from '../adoption/adoption.module';
 import { AdminController } from './admin.controller';
+import { MailingModule } from '../mailing/mailing.module';
 
 @Module({
-  imports: [forwardRef(() => AdoptionModule), TypeOrmModule.forFeature([DogEntity])],
+  imports: [
+    forwardRef(() => AdoptionModule), 
+    TypeOrmModule.forFeature([DogEntity]),
+    MailingModule
+  ],
   providers: [DogsService],
   controllers: [DogsController, AdminController],
   exports: [DogsService]
