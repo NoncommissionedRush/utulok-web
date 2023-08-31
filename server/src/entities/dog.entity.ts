@@ -2,36 +2,9 @@ import { BeforeInsert, Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColu
 import { VirtualAdoption } from "./virtual-adoption.entity";
 import { StandardAdoption } from "./standard-adoption.entity";
 import { TemporaryAdoption } from "./temporary-adoption.entity";
-import { Dog } from "../@types";
+import { Size, Dog, Sex, Age, DogStatus, EligibleFor } from "../../../types"
+import { ImageEntity } from "./image.entity";
 
-export enum Size {
-  SMALL = "small",
-  MEDIUM = "medium",
-  BIG = "big",
-}
-
-export enum Sex {
-  MALE = 'male',
-  FEMALE = 'female',
-}
-
-export enum Age {
-  PUPPY = "puppy",
-  TEENAGER = "teen",
-  ADULT = "adult",
-  SENIOR = "senior",
-}
-
-export enum DogStatus {
-  AVAILABLE = 'available',
-  ADOPTED = 'adopted',
-  DECEASED = 'deceased'
-}
-
-export enum EligibleFor {
-  STANDARD = 'standard',
-  VIRTUAL_ONLY = 'virtual_only',
-}
 
 @Entity()
 export class DogEntity implements Dog {
@@ -97,11 +70,11 @@ export class DogEntity implements Dog {
   @OneToMany(() => VirtualAdoption, adoption => adoption.dog)
   virtualAdoptions: VirtualAdoption[]
 
-  // @OneToMany(() => FileEntity, file => file.dog)
-  // images: FileEntity[]
-
   @Column({ nullable: true })
   mainImageUrl: string;
+
+  @OneToMany(() => ImageEntity, img => img.dog, { cascade: true })
+  images: ImageEntity[]
 
   @Column({
     type: 'bigint',

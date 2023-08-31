@@ -1,5 +1,5 @@
 import { IsEnum, IsNotEmpty, IsNumber } from "class-validator";
-import { AdoptionApprovalStatus, AdoptionType } from "../entities/abstract.adoption";
+import { AdoptionApprovalStatus, AdoptionType } from "../../../types";
 
 export class ProcessAdoptionDto {
     @IsNumber()

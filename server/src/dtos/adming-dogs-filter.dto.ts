@@ -1,4 +1,4 @@
-import { DogStatus } from "src/entities/dog.entity";
+import { DogStatus } from "../../../types";
 import { DogsFilter } from "./dogs-filter.dto";
 import { IsEnum, IsOptional } from "class-validator";
 
@@ -9,7 +9,6 @@ export enum StatusFilter {
 }
 
 export class AdminDogsFilter extends DogsFilter {
- 
   @IsEnum(StatusFilter)
   @IsOptional()
   status?: StatusFilter = StatusFilter.ALL

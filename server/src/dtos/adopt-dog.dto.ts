@@ -1,5 +1,5 @@
 import { IsEmail, IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
-import { AdoptionType } from "../entities/abstract.adoption";
+import { AdoptionType } from "../../../types";
 
 export class AdoptDogDto {
   @IsNumber()

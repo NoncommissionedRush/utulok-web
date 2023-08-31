@@ -1,17 +1,5 @@
 import { BeforeInsert, Column, PrimaryGeneratedColumn } from "typeorm";
-
-export enum AdoptionApprovalStatus {
-    PENDING = 'PENDING',
-    APPROVED = 'APPROVED',
-    REJECTED = 'REJECTED',
-}
-
-export enum AdoptionType {
-  STANDARD = 'standard',
-  VIRTUAL = 'virtual',
-  TEMPORARY = 'temp'
-}
-
+import { AdoptionApprovalStatus, AdoptionType } from "../../../types";
 export abstract class AbstractAdoptionEntity {
     @PrimaryGeneratedColumn()
     id: number;

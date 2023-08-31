@@ -1,5 +1,5 @@
 import { IsBoolean, IsEnum, IsOptional } from "class-validator";
-import { Age, EligibleFor, Sex, Size } from "src/entities/dog.entity";
+import { Age, Sex, Size, EligibleFor } from "../../../types";
 
 export class DogsFilter {
   @IsEnum(Age)
