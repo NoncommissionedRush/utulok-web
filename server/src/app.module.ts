@@ -11,6 +11,7 @@ import { dbConfig, s3Config, sessionConfig } from "./config/configuration";
 import { S3Module } from './s3/s3.module';
 import { AdoptionModule } from './adoption/adoption.module';
 import { EventEmitterModule } from "@nestjs/event-emitter";
+import { MailingModule } from './mailing/mailing.module';
 
 @Module({
   imports: [
@@ -28,7 +29,8 @@ import { EventEmitterModule } from "@nestjs/event-emitter";
     DogsModule,
     AuthModule,
     S3Module,
-    AdoptionModule
+    AdoptionModule,
+    MailingModule
   ],
   controllers: [AppController],
   providers: [AppService],
