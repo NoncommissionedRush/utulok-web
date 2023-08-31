@@ -1,4 +1,5 @@
 import {
+  IsArray,
   IsBoolean,
   IsEnum,
   IsNotEmpty,
@@ -6,8 +7,7 @@ import {
   IsString,
   IsUrl,
 } from "class-validator";
-import { Age, EligibleFor, Sex, Size, DogStatus } from "src/entities/dog.entity";
-import { Dog } from "../@types";
+import { Dog, Size, Sex, Age, DogStatus, EligibleFor, Image } from "../../../types";
 
 export class CreateDogDto implements Omit<Dog, 'id'> {
   @IsString()
@@ -57,4 +57,9 @@ export class CreateDogDto implements Omit<Dog, 'id'> {
   @IsBoolean()
   @IsOptional()
   isCastrated: boolean;
+
+  @IsArray({each: true})
+  @IsUrl()
+  @IsOptional()
+  images: string[]
 }

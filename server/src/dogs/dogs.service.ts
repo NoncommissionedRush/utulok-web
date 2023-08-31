@@ -1,14 +1,14 @@
-import { Injectable, InternalServerErrorException, NotFoundException } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { AdminDogsFilter, StatusFilter } from "src/dtos/adming-dogs-filter.dto";
 import { DogsFilter } from "src/dtos/dogs-filter.dto";
 import { UpdateDogDto } from "src/dtos/update-dog.dto";
-import { DogEntity, DogStatus } from "src/entities/dog.entity";
+import { DogEntity} from "src/entities/dog.entity";
 import { FindOneOptions, Repository } from "typeorm";
 import { CreateDogDto } from "../dtos/create-dog.dto";
 import { EventEmitter2, OnEvent } from "@nestjs/event-emitter";
 import { Events } from "../events";
-import { Adoption } from "../@types";
+import { DogStatus, Adoption, Image } from "../../../types";
 
 @Injectable()
 export class DogsService {
@@ -23,9 +23,22 @@ export class DogsService {
    * Adds new dog to the database, returns dog entity
    */
   async create(dto: CreateDogDto) {
-    const dog = this.dogRepository.create(dto);
+    const dog = this.dogRepository.create({
+      ...dto,
+      images: this.transformImageUrlsToImages(dto.images)
+    });
 
-    return this.dogRepository.save(dog);
+    return await this.dogRepository.save(dog);
+  }
+
+  private transformImageUrlsToImages(imageUrls: string[]) {
+    let images: Image[] = [];
+
+    if (imageUrls) {
+      images = imageUrls.map(url => ({ url }));
+    }
+
+    return images;
   }
 
   /**
@@ -36,7 +49,7 @@ export class DogsService {
 
     qb.andWhere("dog.status = :status", { status: DogStatus.AVAILABLE });
 
-    return qb.getMany();
+    return await qb.getMany();
   }
 
   /**
@@ -53,7 +66,7 @@ export class DogsService {
     qb.leftJoinAndSelect('dog.virtualAdoptions', 'virtualAdoptions')
     qb.leftJoinAndSelect('dog.temporaryAdoption', 'temporaryAdoption')
 
-    return qb.getMany();
+    return await qb.getMany();
   }
 
   private getDogsQuery(dto: DogsFilter) {
@@ -138,7 +151,7 @@ export class DogsService {
   /**
    * Updates given dog entity according to the given dto and returns updated dog entity
    */
-  async update(dog: DogEntity, dto: Partial<DogEntity>): Promise<DogEntity>
+  async update(dog: DogEntity, dto: UpdateDogDto): Promise<DogEntity>
 
   /**
    * Looks for dog entity with given id, updates it according to the given dto and returns updated dog entity.
@@ -158,7 +171,11 @@ export class DogsService {
       await this.eventEmitter.emitAsync(Events.DOG_DECEASED, dogEntity)
     }
 
-    return this.dogRepository.save({ ...dogEntity, ...dto });
+    return this.dogRepository.save({ 
+      ...dogEntity, 
+      ...dto,
+      images: this.transformImageUrlsToImages(dto.images)
+    });
   }
 
   @OnEvent(Events.ADOPTION_STANDARD_APPROVED)

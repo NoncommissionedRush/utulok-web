@@ -1,6 +1,5 @@
-import { IsBoolean, IsEnum, IsOptional, IsString, IsUrl } from "class-validator";
-import { Dog } from "../@types";
-import { Age, DogStatus, EligibleFor, Sex, Size } from "../entities/dog.entity";
+import { IsArray, IsBoolean, IsEnum, IsOptional, IsString, IsUrl } from "class-validator";
+import { Dog, Size, Age, Sex, DogStatus, EligibleFor } from "../../../types";
 
 export class UpdateDogDto implements Partial<Dog> {
     @IsString()
@@ -50,5 +49,10 @@ export class UpdateDogDto implements Partial<Dog> {
     @IsEnum(EligibleFor)
     @IsOptional()
     eligibleFor?: EligibleFor;
+
+    @IsArray({ each: true })
+    @IsUrl()
+    @IsOptional()
+    images: string[]
 }
 
